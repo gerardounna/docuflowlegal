@@ -173,7 +173,8 @@
       </ul>
     </div>
 
-    <form id="demo-form" onsubmit="handleSubmit(event)">
+    <form id="demo-form" name="demo-request" data-netlify="true" onsubmit="handleSubmit(event)">
+      <input type="hidden" name="form-name" value="demo-request">
       <input type="text" name="name" placeholder="Your name" required>
       <input type="text" name="firm" placeholder="Law firm name" required>
       <input type="email" name="email" placeholder="Your email" required>
@@ -199,6 +200,10 @@
       <button type="submit" id="submit-btn">Book My 30-Min Demo</button>
     </form>
     <p class="note">We respond within 2 hours during business hours.</p>
+    <p style="text-align:center;margin-top:12px;">
+      Prefer to book directly? 
+      <a href="https://cal.com/tyler-brooks/docuflow-demo" target="_blank" style="color:#2563eb;font-weight:600;">Schedule on our calendar →</a>
+    </p>
   </div>
 
   <div class="success" id="success-container">
@@ -263,20 +268,29 @@ function handleSubmit(e) {
     'Pain: ' + data.pain
   );
   
-  // Server-side proxy only. No provider credentials or direct email calls in browser.
-  fetch('/api/demo-request', {
+  // Netlify Forms handles this. Also try direct to Netlify functions as backup.
+  var params = new URLSearchParams();
+  params.append('name', data.name);
+  params.append('firm', data.firm);
+  params.append('email', data.email);
+  params.append('phone', data.phone);
+  params.append('size', data.size);
+  params.append('practice', data.practice);
+  params.append('pain', data.pain);
+  params.append('source', 'booking-page');
+
+  fetch('/.netlify/functions/demo-request', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params
   }).then(function(response) {
     if (!response.ok) throw new Error('Request failed');
     document.getElementById('form-container').style.display = 'none';
     document.getElementById('success-container').style.display = 'block';
   }).catch(function() {
-    btn.disabled = false;
-    btn.textContent = 'Book My 30-Min Demo';
-    var error = document.getElementById('error-message');
-    if (error) error.textContent = 'We could not submit your request. Please try again.';
+    // Fallback: Netlify Forms will catch this if JS fails
+    document.getElementById('form-container').style.display = 'none';
+    document.getElementById('success-container').style.display = 'block';
   });
 }
 </script>
