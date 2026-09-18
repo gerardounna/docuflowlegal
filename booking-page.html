@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your DocuFlow Legal Demo — 30 Minutes</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f1629 0%, #1a2744 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 48px;
+      max-width: 520px;
+      width: 100%;
+      color: #1a1a2e;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .badge {
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .sub {
+      color: #64748b;
+      font-size: 1rem;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    .what {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .what-title {
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+    .what ul {
+      list-style: none;
+      font-size: 0.95rem;
+    }
+    .what li {
+      padding: 4px 0;
+      color: #334155;
+    }
+    .what li::before { content: "✓ "; color: #22c55e; font-weight: 700; }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: #1a1a2e;
+      background: white;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    button:hover { background: #1d4ed8; }
+    button:active { background: #1e40af; }
+    .note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-top: 12px;
+    }
+    .success {
+      text-align: center;
+      display: none;
+    }
+    .success h2 {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+    .success p { color: #64748b; line-height: 1.6; }
+    .success-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div id="form-container">
+    <span class="badge">Accepting 3 new firms per month</span>
+    <h1>See DocuFlow draft YOUR firm's documents live</h1>
+    <p class="sub">We show your actual workflows, not generic templates. 30 minutes. No commitment.</p>
+    
+    <!-- Demo inline — sin link roto, funciona en esta misma página -->
+    <div style="margin: 16px 0; padding: 16px; background: #f0fdf4; border-radius: 10px; border: 1px solid #bbf7d0;">
+      <div style="font-weight:700; font-size:0.85rem; color:#166534; margin-bottom:8px;">⚡ See it in action — pick a document type:</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button onclick="showSample('nda')" style="background:#22c55e;color:white;border:none;padding:8px 16px;border-radius:6px;font-size:0.8rem;cursor:pointer;font-weight:600;">📄 NDA</button>
+        <button onclick="showSample('contract')" style="background:#22c55e;color:white;border:none;padding:8px 16px;border-radius:6px;font-size:0.8rem;cursor:pointer;font-weight:600;">📋 Contract Clause</button>
+        <button onclick="showSample('email')" style="background:#22c55e;color:white;border:none;padding:8px 16px;border-radius:6px;font-size:0.8rem;cursor:pointer;font-weight:600;">📧 Client Email</button>
+        <button onclick="showSample('memo')" style="background:#22c55e;color:white;border:none;padding:8px 16px;border-radius:6px;font-size:0.8rem;cursor:pointer;font-weight:600;">📝 Legal Memo</button>
+      </div>
+      <div id="demo-output" style="margin-top:12px; background:#0a1628;color:#86efac;border-radius:8px;padding:14px;font-size:0.82rem;min-height:80px;line-height:1.6;font-family:monospace;display:none;"></div>
+      <div style="margin-top:8px;font-size:0.75rem;color:#64748b;">AI-generated · Ready in seconds · Your firm branding</div>
+    </div>
+    <script>
+    function showSample(type) {
+      var samples = {
+        nda: { label: 'Non-Disclosure Agreement — Texas Corporate', text: 'PARTIES:\\nDisclosing Party: [Your Firm Name], a Texas professional corporation\\nReceiving Party: [Counterparty Name]\\n\\nEFFECTIVE DATE: [Date]\\n\\n1. CONFIDENTIAL INFORMATION\\n"Confidential Information" means any non-public technical, business, or financial information disclosed by either party...\\n\\n2. OBLIGATIONS\\nThe Receiving Party shall: (a) hold all Confidential Information in strict confidence; (b) not disclose to any third party without prior written consent; (c) use Confidential Information solely for evaluating a potential business relationship...\\n\\n3. TERM\\nThis Agreement shall remain in effect for two (2) years from the Effective Date.' },
+        contract: { label: 'Contract Amendment — M&A Representation', text: 'REPRESENTATIONS AND WARRANTIES OF SELLER\\n\\nSeller hereby represents and warrants to Buyer as of the date hereof and as of the Closing Date as follows:\\n\\n4.1 Organization and Good Standing. Seller is duly organized, validly existing, and in good standing under the laws of the State of Texas...' },
+        email: { label: 'Client Status Update — Immigration', text: 'Subject: Update on Your I-485 Application — Receipt Confirmed\\n\\nDear [Client Name],\\n\\nI wanted to reach out personally to let you know we received confirmation that your I-485 application has been accepted and is now pending with USCIS...\\n\\nBased on current processing times for the Dallas Field Office, we can expect a decision within [X] months...' },
+        memo: { label: 'Internal Legal Memo — Case Assessment', text: 'MEMORANDUM\\n\\nTO: [Attorney/Partner]\\nFROM: [Associate]\\nRE: [Matter Name] — Initial Case Assessment\\nDATE: [Date]\\n\\nI. QUESTION PRESENTED\\nWhether [client] has viable claims under [Texas law / federal statute] for damages arising from [factual scenario]...\\n\\nII. BRIEF ANSWER\\nYes, with moderate confidence. The strongest theory appears to be [claim], supported by [evidence]...' }
+      };
+      var s = samples[type];
+      var el = document.getElementById('demo-output');
+      el.style.display = 'block';
+      el.innerHTML = '<div style="color:#86efac;font-weight:700;margin-bottom:8px;font-size:0.75rem;">▶ ' + s.label + '</div>' + s.text.replace(/\n/g, '<br>');
+    }
+    </script>
+    
+    <div class="what">
+      <div class="what-title">What happens on the session:</div>
+      <ul>
+        <li>We review your document workflows</li>
+        <li>We show 3 custom automations for your practice</li>
+        <li>You get a specific ROI estimate for your team</li>
+        <li>We answer every question honestly</li>
+      </ul>
+    </div>
+
+    <form id="demo-form" onsubmit="handleSubmit(event)">
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="text" name="firm" placeholder="Law firm name" required>
+      <input type="email" name="email" placeholder="Your email" required>
+      <input type="tel" name="phone" placeholder="Phone (optional)">
+      <select name="size" required>
+        <option value="">Team size</option>
+        <option value="1-3">1-3 attorneys</option>
+        <option value="4-10">4-10 attorneys</option>
+        <option value="11-25">11-25 attorneys</option>
+        <option value="26+">26+ attorneys</option>
+      </select>
+      <select name="practice" required>
+        <option value="">Primary practice area</option>
+        <option value="corporate">Corporate / M&A</option>
+        <option value="immigration">Immigration</option>
+        <option value="real-estate">Real Estate</option>
+        <option value="litigation">Litigation</option>
+        <option value="employment">Employment Law</option>
+        <option value="estate">Estate Planning</option>
+        <option value="other">Other</option>
+      </select>
+      <textarea name="pain" rows="2" placeholder="Biggest document pain point (optional)"></textarea>
+      <button type="submit" id="submit-btn">Book My 30-Min Demo</button>
+    </form>
+    <p class="note">We respond within 2 hours during business hours.</p>
+  </div>
+
+  <div class="success" id="success-container">
+    <div class="success-icon">✓</div>
+    <h2>Request received!</h2>
+    <p>Confirm your demo time — book directly on our calendar:</p>
+      <p style="margin:16px 0;"><a href="https://cal.com/tyler-brooks/docuflow-demo" style="background:#2563eb;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:1rem;display:inline-block;" target="_blank">Book Your 30-Min Demo Now</a></p>
+      <p style="color:#64748b;font-size:0.85rem;">Or reply to our email - we check daily.</p>
+      <p></p>
+    <div style="margin-top:20px;padding:20px;background:#f0f9ff;border-radius:12px;border:1.5px solid #bfdbfe;text-align:left;">
+      <div style="font-weight:700;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:#1d4ed8;margin-bottom:12px;">Pricing — no surprises</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:0.9rem;color:#334155;">
+        <span><strong>Professional Setup</strong></span>
+        <a href="https://buy.stripe.com/8x23coaQ253xa93fZ4abK00" target="_blank" style="background:#2563eb;color:white;padding:6px 14px;border-radius:6px;text-decoration:none;font-size:0.8rem;font-weight:600;">$1,497 →</a>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:0.9rem;color:#334155;">
+        <span>Monthly (Professional)</span>
+        <span><strong>$497/mo</strong></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:0.9rem;color:#334155;">
+        <span><strong>Enterprise Setup</strong></span>
+        <a href="https://buy.stripe.com/eVqbIU3nAeE7epjbIOabK02" target="_blank" style="background:#7c3aed;color:white;padding:6px 14px;border-radius:6px;text-decoration:none;font-size:0.8rem;font-weight:600;">$2,497 →</a>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:0.9rem;color:#334155;">
+        <span>Monthly (Enterprise)</span>
+        <span><strong>$497/mo</strong></span>
+      </div>
+      <div style="font-size:0.78rem;color:#64748b;margin-top:10px;">Setup includes 30-day onboarding + custom document training. Cancel monthly anytime.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  var btn = document.getElementById('submit-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  
+  // Recopilar datos
+  var form = document.getElementById('demo-form');
+  var data = {
+    name: form.name.value,
+    firm: form.firm.value,
+    email: form.email.value,
+    phone: form.phone.value,
+    size: form.size.value,
+    practice: form.practice.value,
+    pain: form.pain.value,
+    source: 'booking-page'
+  };
+  
+  // Enviar por email usando mailto como fallback
+  var subject = encodeURIComponent('Demo Request: ' + data.firm + ' - ' + data.name);
+  var body = encodeURIComponent(
+    'Nombre: ' + data.name + '\n' +
+    'Firma: ' + data.firm + '\n' +
+    'Email: ' + data.email + '\n' +
+    'Teléfono: ' + data.phone + '\n' +
+    'Tamaño: ' + data.size + '\n' +
+    'Práctica: ' + data.practice + '\n' +
+    'Pain: ' + data.pain
+  );
+  
+  // Server-side proxy only. No provider credentials or direct email calls in browser.
+  fetch('/api/demo-request', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(function(response) {
+    if (!response.ok) throw new Error('Request failed');
+    document.getElementById('form-container').style.display = 'none';
+    document.getElementById('success-container').style.display = 'block';
+  }).catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Book My 30-Min Demo';
+    var error = document.getElementById('error-message');
+    if (error) error.textContent = 'We could not submit your request. Please try again.';
+  });
+}
+</script>
+
+</body>
+</html>
