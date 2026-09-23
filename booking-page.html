@@ -3,244 +3,276 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book Your DocuFlow Legal Demo — 30 Minutes</title>
+  <title>Start with DocuFlow Legal — Setup or Demo</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: linear-gradient(135deg, #0f1629 0%, #1a2744 100%);
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       color: white;
       padding: 20px;
     }
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 48px;
-      max-width: 520px;
-      width: 100%;
-      color: #1a1a2e;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    }
-    .badge {
-      background: #dbeafe;
-      color: #1d4ed8;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      display: inline-block;
-      margin-bottom: 16px;
-    }
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-    .sub {
-      color: #64748b;
-      font-size: 1rem;
-      margin-bottom: 32px;
-      line-height: 1.6;
-    }
-    .what {
-      background: #f8fafc;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 32px;
-    }
-    .what-title {
-      font-weight: 700;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #64748b;
-      margin-bottom: 12px;
-    }
-    .what ul {
-      list-style: none;
-      font-size: 0.95rem;
-    }
-    .what li {
-      padding: 4px 0;
-      color: #334155;
-    }
+    .container { max-width: 860px; margin: 0 auto; }
+
+    /* HEADER */
+    .header { text-align: center; padding: 48px 0 32px; }
+    .badge { display: inline-block; background: rgba(59,130,246,0.2); border: 1px solid rgba(59,130,246,0.4); color: #93c5fd; padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 20px; }
+    h1 { font-size: 2rem; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+    .sub { color: #94a5b8; font-size: 1rem; line-height: 1.6; max-width: 560px; margin: 0 auto 32px; }
+
+    /* TABS */
+    .tabs { display: flex; gap: 8px; justify-content: center; margin-bottom: 32px; }
+    .tab { padding: 12px 28px; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: 1.5px solid rgba(255,255,255,0.2); background: transparent; color: rgba(255,255,255,0.6); transition: all 0.2s; }
+    .tab.active { background: #3b82f6; border-color: #3b82f6; color: white; }
+    .tab:hover:not(.active) { border-color: rgba(255,255,255,0.5); color: white; }
+
+    /* PANELS */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* PRICING CARDS */
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px; }
+    .pricing-card { background: white; border-radius: 16px; padding: 32px; color: #1a1a2e; text-align: center; border: 2px solid transparent; transition: border-color 0.2s; }
+    .pricing-card:hover { border-color: #3b82f6; }
+    .pricing-card.featured { border-color: #3b82f6; position: relative; }
+    .pricing-card.featured::before { content: "Most Popular"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #3b82f6; color: white; padding: 4px 16px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .card-badge { background: #dbeafe; color: #1d4ed8; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 16px; }
+    .card-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+    .card-desc { color: #64748b; font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5; }
+    .card-price { font-size: 2rem; font-weight: 800; color: #1a1a2e; }
+    .card-price span { font-size: 1rem; font-weight: 400; color: #64748b; }
+    .card-setup { font-size: 0.85rem; color: #64748b; margin-top: 4px; }
+    .card-features { list-style: none; text-align: left; margin: 20px 0; }
+    .card-features li { padding: 6px 0; font-size: 0.9rem; color: #334155; }
+    .card-features li::before { content: "✓ "; color: #22c55e; font-weight: 700; }
+    .card-btn { display: block; width: 100%; background: #2563eb; color: white; border: none; padding: 14px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit; text-decoration: none; margin-top: 16px; transition: background 0.2s; }
+    .card-btn:hover { background: #1d4ed8; }
+    .card-btn-secondary { display: block; width: 100%; background: white; color: #2563eb; border: 1.5px solid #e2e8f0; padding: 14px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit; text-decoration: none; margin-top: 8px; transition: all 0.2s; }
+    .card-btn-secondary:hover { background: #f8fafc; border-color: #3b82f6; }
+    .card-note { font-size: 0.8rem; color: #94a3b8; margin-top: 12px; }
+
+    /* DEMO FORM */
+    .demo-card { background: white; border-radius: 16px; padding: 40px; color: #1a1a2e; }
+    .demo-header { text-align: center; margin-bottom: 28px; }
+    .demo-header h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: #1a1a2e; }
+    .demo-header p { color: #64748b; font-size: 0.95rem; }
+    .what { background: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 28px; }
+    .what-title { font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin-bottom: 12px; }
+    .what ul { list-style: none; font-size: 0.95rem; }
+    .what li { padding: 4px 0; color: #334155; }
     .what li::before { content: "✓ "; color: #22c55e; font-weight: 700; }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-family: inherit;
-      color: #1a1a2e;
-      background: white;
-    }
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
-    }
-    button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 14px 24px;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      width: 100%;
-      transition: background 0.2s;
-    }
-    button:hover { background: #1d4ed8; }
-    button:active { background: #1e40af; }
-    .note {
-      text-align: center;
-      font-size: 0.8rem;
-      color: #94a3b8;
-      margin-top: 12px;
-    }
-    .success {
-      text-align: center;
-      display: none;
-    }
-    .success h2 {
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-    }
+    form { display: flex; flex-direction: column; gap: 14px; }
+    input, select, textarea { width: 100%; padding: 12px 16px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 0.95rem; font-family: inherit; color: #1a1a2e; background: white; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+    .demo-btn { background: #2563eb; color: white; border: none; padding: 14px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit; width: 100%; transition: background 0.2s; }
+    .demo-btn:hover { background: #1d4ed8; }
+    .note { text-align: center; font-size: 0.8rem; color: #94a3b8; margin-top: 10px; }
+
+    /* SUCCESS */
+    .success { text-align: center; display: none; }
+    .success.show { display: block; }
+    .success-icon { width: 64px; height: 64px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .success-icon span { font-size: 32px; }
+    .success h2 { color: #1a1a2e; font-size: 1.5rem; margin-bottom: 12px; }
     .success p { color: #64748b; line-height: 1.6; }
-    .success-icon {
-      font-size: 4rem;
-      margin-bottom: 16px;
+
+    /* DIVIDER */
+    .or-divider { text-align: center; margin: 20px 0; color: #64748b; font-size: 0.9rem; position: relative; }
+    .or-divider::before, .or-divider::after { content: ""; display: inline-block; width: 80px; height: 1px; background: #e2e8f0; vertical-align: middle; margin: 0 12px; }
+
+    /* TRUST */
+    .trust { text-align: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .trust p { font-size: 0.85rem; color: #64748b; }
+    .trust-logos { display: flex; gap: 16px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+    .trust-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; color: #94a5b8; }
+
+    /* CLOSER CTA */
+    .closer-cta { text-align: center; margin-top: 20px; }
+    .closer-cta p { font-size: 0.9rem; color: #64748b; margin-bottom: 16px; }
+
+    @media (max-width: 640px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 1.6rem; }
     }
   </style>
 </head>
 <body>
+<div class="container">
 
-<div class="card">
-  <div id="form-container">
-    <span class="badge">Free 30-minute session · No commitment</span>
-    <h1>See DocuFlow draft YOUR firm's documents live</h1>
-    <p class="sub">Bring 1-2 real documents from your practice. We train AI on those and show you the result. 30 minutes, honest conversation.</p>
-    
-    <p style="text-align:center; margin: 16px 0;">
-      <a href="docuflow-product/demo-interface.html" style="color:#3b82f6; font-size:0.9rem;">⚡ Try the live document generator right now — no signup needed</a>
-    </p>
-    
-    <div class="what">
-      <div class="what-title">What happens on the session:</div>
-      <ul>
-        <li>Upload 1-2 real documents from your practice (optional)</li>
-        <li>We train AI on your firm's format and show you the result</li>
-        <li>We estimate hours saved and time-to-value for your team</li>
-        <li>You decide — we answer every question</li>
-      </ul>
-    </div>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge">DocuFlow Legal — Austin, TX</div>
+    <h1>Ready to Automate Your Firm's Documents?</h1>
+    <p class="sub">Two paths. Pick the one that fits where you are right now.</p>
 
-    <form id="demo-form" onsubmit="handleSubmit(event)">
-      <input type="text" name="name" placeholder="Your name" required>
-      <input type="text" name="firm" placeholder="Law firm name" required>
-      <input type="email" name="email" placeholder="Your email" required>
-      <input type="tel" name="phone" placeholder="Phone (optional)">
-      <select name="size" required>
-        <option value="">Team size</option>
-        <option value="1-3">1-3 attorneys</option>
-        <option value="4-10">4-10 attorneys</option>
-        <option value="11-25">11-25 attorneys</option>
-        <option value="26+">26+ attorneys</option>
-      </select>
-      <select name="practice" required>
-        <option value="">Primary practice area</option>
-        <option value="corporate">Corporate / M&A</option>
-        <option value="immigration">Immigration</option>
-        <option value="real-estate">Real Estate</option>
-        <option value="litigation">Litigation</option>
-        <option value="employment">Employment Law</option>
-        <option value="estate">Estate Planning</option>
-        <option value="other">Other</option>
-      </select>
-      <textarea name="pain" rows="2" placeholder="Biggest document pain point (optional)"></textarea>
-      <button type="submit" id="submit-btn">Book My 30-Min Demo</button>
-    </form>
-    <p class="note">We respond within 2 hours during business hours.</p>
-  </div>
-
-  <div class="success" id="success-container">
-    <div class="success-icon">✓</div>
-    <h2>Request received!</h2>
-    <p>We'll confirm your demo time within 2 hours. Check your email for next steps.</p>
-    <div style="margin-top:20px;padding:20px;background:#f0f9ff;border-radius:12px;border:1.5px solid #bfdbfe;text-align:left;">
-      <div style="font-weight:700;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:#1d4ed8;margin-bottom:12px;">Pricing — no surprises</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:0.9rem;color:#334155;">
-        <span><strong>Professional Setup</strong></span>
-        <a href="https://buy.stripe.com/8x23coaQ253xa93fZ4abK00" target="_blank" style="background:#2563eb;color:white;padding:6px 14px;border-radius:6px;text-decoration:none;font-size:0.8rem;font-weight:600;">$1,497 →</a>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:0.9rem;color:#334155;">
-        <span>Monthly (Professional)</span>
-        <span><strong>$497/mo</strong></span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:0.9rem;color:#334155;">
-        <span><strong>Enterprise Setup</strong></span>
-        <a href="https://buy.stripe.com/eVqbIU3nAeE7epjbIOabK02" target="_blank" style="background:#7c3aed;color:white;padding:6px 14px;border-radius:6px;text-decoration:none;font-size:0.8rem;font-weight:600;">$2,497 →</a>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:0.9rem;color:#334155;">
-        <span>Monthly (Enterprise)</span>
-        <span><strong>$497/mo</strong></span>
-      </div>
-      <div style="font-size:0.78rem;color:#64748b;margin-top:10px;">Setup includes 30-day onboarding + custom document training. Cancel monthly anytime.</div>
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" id="tab-demo" onclick="switchTab('demo')">📅 Book a Free Demo</button>
+      <button class="tab" id="tab-start" onclick="switchTab('start')">⚡ Start Now — Pay Setup</button>
     </div>
   </div>
+
+  <!-- PANEL: DEMO -->
+  <div class="panel active" id="panel-demo">
+
+    <div class="demo-card">
+      <div class="demo-header">
+        <h2>Free 30-Minute Demo</h2>
+        <p>We show you YOUR documents automated — not a generic template library.</p>
+      </div>
+
+      <div class="what">
+        <div class="what-title">What happens in the session</div>
+        <ul>
+          <li>Bring 1–2 real documents from your practice</li>
+          <li>We show how DocuFlow drafts based on YOUR format and language</li>
+          <li>We map out your top 3 highest-volume document types</li>
+          <li>You get a custom automation sample — free, in 48 hours</li>
+        </ul>
+      </div>
+
+      <div id="form-container">
+        <form onsubmit="submitDemo(event)">
+          <input type="text" id="name" placeholder="Your name" required>
+          <input type="email" id="email" placeholder="Work email" required>
+          <input type="text" id="firm" placeholder="Law firm name" required>
+          <input type="text" id="attorneys" placeholder="Number of attorneys">
+          <select id="practice">
+            <option value="">Primary practice area</option>
+            <option>Immigration</option>
+            <option>Corporate / M&A</option>
+            <option>Real Estate</option>
+            <option>Family Law</option>
+            <option>Employment / Labor</option>
+            <option>Energy</option>
+            <option>Litigation</option>
+            <option>Securities</option>
+            <option>Other</option>
+          </select>
+          <textarea id="documents" rows="3" placeholder="What document types does your firm handle most? (e.g., immigration petitions, contracts, lease agreements)"></textarea>
+          <button type="submit" class="demo-btn">📅 Request My Free Demo</button>
+        </form>
+      </div>
+
+      <div id="success-demo" class="success">
+        <div class="success-icon"><span>✓</span></div>
+        <h2>Request received!</h2>
+        <p>We'll reach out within 1 business day to schedule your session. Check your inbox — we'll send a calendar link and a prep guide.</p>
+        <p style="margin-top:12px; font-size:0.9rem; color:#64748b;">Prefer to start now? <a href="#" onclick="switchTab('start'); return false;" style="color:#3b82f6;">See pricing and pay setup →</a></p>
+      </div>
+
+      <p class="note">Free 30-minute session · No commitment · Reply within 1 business day</p>
+    </div>
+
+    <div class="closer-cta">
+      <p>Not ready for a demo call? Skip the conversation and start today.</p>
+      <button class="tab" onclick="switchTab('start')" style="background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.8); padding:12px 24px; border-radius:8px; font-size:0.9rem; font-weight:600; cursor:pointer;">⚡ Start Now — Pay Setup</button>
+    </div>
+
+  </div>
+
+  <!-- PANEL: START NOW -->
+  <div class="panel" id="panel-start">
+
+    <p style="text-align:center; color:#94a5b8; margin-bottom:24px; font-size:0.95rem;">No demo needed. Choose your plan, pay setup, and we start onboarding within 48 hours.</p>
+
+    <div class="pricing-grid">
+      <!-- PROFESSIONAL -->
+      <div class="pricing-card featured">
+        <div class="card-badge">Recommended</div>
+        <div class="card-name">Professional</div>
+        <div class="card-desc">Firms with 2–15 attorneys.<br>Most practice areas covered.</div>
+        <div class="card-price">$497<span>/mo</span></div>
+        <div class="card-setup">$1,497 one-time setup</div>
+        <ul class="card-features">
+          <li>AI trained on your firm's documents</li>
+          <li>Up to 5 document types automated</li>
+          <li>3 attorney seats included</li>
+          <li>Email support + onboarding call</li>
+          <li>Cancel anytime · 30-day notice</li>
+        </ul>
+        <a href="https://buy.stripe.com/8x23coaQ253xa93fZ4abK00" target="_blank" class="card-btn">Start Professional →</a>
+        <a href="https://buy.stripe.com/8x23coaQ253xa93fZ4abK00" target="_blank" class="card-btn-secondary">View Plan Details</a>
+        <p class="card-note">Secure checkout via Stripe · Setup fee charged at signup</p>
+      </div>
+
+      <!-- ENTERPRISE -->
+      <div class="pricing-card">
+        <div class="card-name">Enterprise</div>
+        <div class="card-desc">Firms with 15–30 attorneys.<br>High volume, complex workflows.</div>
+        <div class="card-price">$497<span>/mo</span></div>
+        <div class="card-setup">$2,497 one-time setup</div>
+        <ul class="card-features">
+          <li>AI trained on your firm's documents</li>
+          <li>Unlimited document types</li>
+          <li>Unlimited seats</li>
+          <li>Dedicated account manager</li>
+          <li>Priority onboarding · SLA support</li>
+        </ul>
+        <a href="https://buy.stripe.com/eVqbIU3nAeE7epjbIOabK02" target="_blank" class="card-btn">Start Enterprise →</a>
+        <a href="https://buy.stripe.com/eVqbIU3nAeE7epjbIOabK02" target="_blank" class="card-btn-secondary">View Plan Details</a>
+        <p class="card-note">Secure checkout via Stripe · Setup fee charged at signup</p>
+      </div>
+    </div>
+
+    <div class="trust">
+      <p>What happens after you pay:</p>
+      <div class="trust-logos">
+        <div class="trust-item">📄 Day 1 — We review your documents</div>
+        <div class="trust-item">🤖 Day 3–5 — AI trained on your firm's language</div>
+        <div class="trust-item">📝 Day 7–14 — Live drafts ready for your review</div>
+      </div>
+    </div>
+
+    <div class="closer-cta" style="margin-top:28px;">
+      <p>Prefer to see it working first? <button onclick="switchTab('demo')" style="background:none; border:none; color:#60a5fa; font-size:0.95rem; cursor:pointer; text-decoration:underline;">Book a free demo →</button></p>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div style="text-align:center; margin-top:40px; padding:20px; border-top:1px solid rgba(255,255,255,0.1);">
+    <p style="font-size:0.8rem; color:#475569;">DocuFlow Legal · Austin, TX · <a href="mailto:hello@docuflowlegal.com" style="color:#64748b;">hello@docuflowlegal.com</a></p>
+  </div>
+
 </div>
 
 <script>
-function handleSubmit(e) {
+function switchTab(tab) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  if (tab === 'demo') {
+    document.getElementById('panel-demo').classList.add('active');
+    document.getElementById('tab-demo').classList.add('active');
+  } else {
+    document.getElementById('panel-start').classList.add('active');
+    document.getElementById('tab-start').classList.add('active');
+  }
+}
+
+function submitDemo(e) {
   e.preventDefault();
-  var btn = document.getElementById('submit-btn');
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-  
-  // Recopilar datos
-  var form = document.getElementById('demo-form');
-  var data = {
-    name: form.name.value,
-    firm: form.firm.value,
-    email: form.email.value,
-    phone: form.phone.value,
-    size: form.size.value,
-    practice: form.practice.value,
-    pain: form.pain.value,
-    source: 'booking-page'
-  };
-  
-  // Enviar por email usando mailto como fallback
-  var subject = encodeURIComponent('Demo Request: ' + data.firm + ' - ' + data.name);
-  var body = encodeURIComponent(
-    'Nombre: ' + data.name + '\n' +
-    'Firma: ' + data.firm + '\n' +
-    'Email: ' + data.email + '\n' +
-    'Teléfono: ' + data.phone + '\n' +
-    'Tamaño: ' + data.size + '\n' +
-    'Práctica: ' + data.practice + '\n' +
-    'Pain: ' + data.pain
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const firm = document.getElementById('firm').value;
+  const practice = document.getElementById('practice').value;
+  const documents = document.getElementById('documents').value;
+  const attorneys = document.getElementById('attorneys').value;
+
+  const subject = encodeURIComponent('Demo Request — ' + firm);
+  const body = encodeURIComponent(
+    'Name: ' + name + '\n' +
+    'Email: ' + email + '\n' +
+    'Firm: ' + firm + '\n' +
+    'Attorneys: ' + attorneys + '\n' +
+    'Practice: ' + practice + '\n' +
+    'Top documents: ' + documents
   );
-  
-  // Envío por email — abre el cliente de correo del lead con los datos llenos
+
   window.location.href = 'mailto:hello@docuflowlegal.com?subject=' + subject + '&body=' + body;
   document.getElementById('form-container').style.display = 'none';
-  document.getElementById('success-container').style.display = 'block';
+  document.getElementById('success-demo').classList.add('show');
 }
 </script>
 
