@@ -47,6 +47,12 @@
   .examples { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
   .example-btn { background: #1a1a1a; border: 1px solid #333; color: #888; padding: 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; text-align: center; transition: all 0.2s; }
   .example-btn:hover { border-color: #22c55e; color: #22c55e; }
+  .cta-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .cta-btn { padding: 12px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; border: none; display: block; }
+  .cta-pro { background: #22c55e; color: #000; }
+  .cta-pro:hover { background: #16a34a; }
+  .cta-ent { background: #3b82f6; color: #fff; }
+  .cta-ent:hover { background: #2563eb; }
   
   @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } .examples { grid-template-columns: 1fr 1fr; } }
 </style>
@@ -103,6 +109,11 @@
       
       <button class="btn" id="generateBtn" onclick="generateDoc()">Generate Document</button>
       
+      <div class="cta-bar">
+        <a href="https://buy.stripe.com/8x23coaQ253xa93fZ4abK00" target="_blank" class="cta-btn cta-pro">Get Professional — $1,497</a>
+        <a href="https://buy.stripe.com/eVqbIU3nAeE7epjbIOabK02" target="_blank" class="cta-btn cta-ent">Get Enterprise — $2,497</a>
+      </div>
+      
       <div class="cost-bar">
         <div class="cost-row">
           <span>Monthly budget</span><span>$100.00</span>
@@ -123,7 +134,7 @@
 </div>
 
 <script>
-const API = "/api/generate-document";
+const API = "https://docuflow-api.workers.dev/api/generate-document"; // Cloudflare Worker proxy
 
 const PROMPTS = {
   nda: (a, b, d) => `Generate a Non-Disclosure Agreement for a Texas law firm.\n\nDisclosing Party: ${a}\nReceiving Party: ${b}\nPurpose/Details: ${d}\n\nInclude: parties, confidential information definitions, obligations, 3-year term, governing law (Texas), signature blocks. Professional Texas legal format.`,
