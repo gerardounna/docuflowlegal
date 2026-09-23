@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DocuFlow Legal — Document Generator Demo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e5e5e5; min-height: 100vh; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+  .header { text-align: center; margin-bottom: 48px; }
+  .header h1 { font-size: 2.2rem; color: #fff; margin-bottom: 8px; }
+  .header p { color: #888; font-size: 1.1rem; }
+  .badge { background: #22c55e; color: #000; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-bottom: 16px; }
+  
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .panel { background: #141414; border: 1px solid #262626; border-radius: 12px; padding: 28px; }
+  .panel h2 { font-size: 1.1rem; color: #fff; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #262626; }
+  
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 0.8rem; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .field input, .field textarea, .field select { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 10px 12px; color: #fff; font-size: 0.9rem; }
+  .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: #22c55e; }
+  .field textarea { resize: vertical; min-height: 60px; }
+  
+  .btn { background: #22c55e; color: #000; border: none; padding: 14px 28px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.2s; }
+  .btn:hover { background: #16a34a; transform: translateY(-1px); }
+  .btn:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; }
+  .btn.loading { background: #16a34a; }
+  
+  .cost-bar { background: #1a1a1a; border-radius: 8px; padding: 16px; margin-top: 20px; }
+  .cost-row { display: flex; justify-content: space-between; font-size: 0.85rem; color: #888; margin-bottom: 8px; }
+  .cost-row span:last-child { color: #22c55e; font-weight: 600; }
+  .progress { background: #262626; border-radius: 4px; height: 8px; overflow: hidden; }
+  .progress-fill { background: #22c55e; height: 100%; border-radius: 4px; transition: width 0.3s; width: 0.3%; }
+  
+  #output { background: #0d0d0d; border: 1px solid #262626; border-radius: 8px; padding: 24px; min-height: 400px; white-space: pre-wrap; font-size: 0.85rem; line-height: 1.7; color: #ccc; overflow-y: auto; max-height: 600px; }
+  #output.empty { color: #444; }
+  .output-meta { font-size: 0.75rem; color: #666; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #262626; }
+  .output-meta span { margin-right: 16px; }
+  .output-meta .cost { color: #22c55e; }
+  .output-meta .time { color: #888; }
+  
+  .status { text-align: center; padding: 20px; color: #888; font-size: 0.9rem; }
+  .status.active { color: #22c55e; }
+  
+  .examples { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .example-btn { background: #1a1a1a; border: 1px solid #333; color: #888; padding: 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; text-align: center; transition: all 0.2s; }
+  .example-btn:hover { border-color: #22c55e; color: #22c55e; }
+  
+  @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } .examples { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">LIVE DEMO</div>
+    <h1>DocuFlow Legal — Document Generator</h1>
+    <p>AI-powered legal document creation · GPT-4o-mini · Under 10 seconds</p>
+  </div>
+  
+  <div class="grid">
+    <div class="panel">
+      <h2>📋 Document Request</h2>
+      
+      <div class="examples">
+        <button class="example-btn" onclick="loadExample('nda')">NDA</button>
+        <button class="example-btn" onclick="loadExample('rfe')">RFE Response</button>
+        <button class="example-btn" onclick="loadExample('contract')">Contract</button>
+      </div>
+      
+      <div class="field">
+        <label>Document Type</label>
+        <select id="docType">
+          <option value="nda">Non-Disclosure Agreement</option>
+          <option value="rfe_response">Immigration RFE Response</option>
+          <option value="contract">Commercial Contract</option>
+          <option value="petition">Legal Petition</option>
+          <option value="motion">Legal Motion</option>
+          <option value="agreement">General Agreement</option>
+        </select>
+      </div>
+      
+      <div class="field">
+        <label>Party A / Applicant Name</label>
+        <input type="text" id="partyA" placeholder="e.g., Maria Gonzalez">
+      </div>
+      
+      <div class="field">
+        <label>Party B / Case Number</label>
+        <input type="text" id="partyB" placeholder="e.g., YSC2190123456">
+      </div>
+      
+      <div class="field">
+        <label>Key Details / Visa Type / Subject</label>
+        <textarea id="details" placeholder="Describe the key facts, legal issues, or terms..."></textarea>
+      </div>
+      
+      <div class="field">
+        <label>Firm's Document Style (optional)</label>
+        <textarea id="style" placeholder="e.g., Use formal Texas legal language, cite 8 CFR for immigration..."></textarea>
+      </div>
+      
+      <button class="btn" id="generateBtn" onclick="generateDoc()">Generate Document</button>
+      
+      <div class="cost-bar">
+        <div class="cost-row">
+          <span>Monthly budget</span><span>$100.00</span>
+        </div>
+        <div class="cost-row">
+          <span>Used today</span><span id="costUsed">$0.0003</span>
+        </div>
+        <div class="progress"><div class="progress-fill" id="costBar"></div></div>
+      </div>
+    </div>
+    
+    <div class="panel">
+      <h2>📄 Generated Document</h2>
+      <div id="output" class="empty">Your document will appear here. Fill in the form and click Generate.</div>
+      <div class="status" id="status">Ready</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = "/api/generate-document";
+
+const PROMPTS = {
+  nda: (a, b, d) => `Generate a Non-Disclosure Agreement for a Texas law firm.\n\nDisclosing Party: ${a}\nReceiving Party: ${b}\nPurpose/Details: ${d}\n\nInclude: parties, confidential information definitions, obligations, 3-year term, governing law (Texas), signature blocks. Professional Texas legal format.`,
+  
+  rfe_response: (a, b, d) => `Draft a Response to Request for Evidence (RFE) for a Texas immigration practice.\n\nApplicant Name: ${a}\nCase Number: ${b}\nCase Details: ${d}\n\nInclude: reference to RFE, response to each item requested, supporting evidence list, legal citations, signature block. Format: standard USCIS response.`,
+  
+  contract: (a, b, d) => `Generate a commercial agreement for a Texas business law firm.\n\nParty A: ${a}\nParty B: ${b}\nTerms/Details: ${d}\n\nInclude: recitals, definitions, terms, payment, termination, governing law (Texas), signature blocks. Texas business contract format.`,
+  
+  petition: (a, b, d) => `Draft a Texas state court petition.\n\nPetitioner: ${a}\nRespondent: ${b}\nFacts/Claims: ${d}\n\nInclude: caption, jurisdictional statement, factual allegations, legal claims, prayer for relief, signature block.`,
+  
+  motion: (a, b, d) => `Draft a Texas state court motion.\n\nMovant: ${a}\nCase/Context: ${b}\nMotion Details: ${d}\n\nInclude: caption, introduction, statement of facts, legal argument, prayer for relief.`,
+  
+  agreement: (a, b, d) => `Generate a legal agreement for a Texas firm.\n\nParty A: ${a}\nParty B: ${b}\nPurpose/Details: ${d}\n\nInclude all standard clauses, Texas governing law, signature blocks.`
+};
+
+const DOC_NAMES = { nda: 'NDA', rfe_response: 'RFE Response', contract: 'Commercial Contract', petition: 'Legal Petition', motion: 'Legal Motion', agreement: 'General Agreement' };
+
+const EXAMPLES = {
+  nda: { partyA: 'TechStart Austin LLC', partyB: 'Redstone Ventures Inc.', details: 'Mutual NDA for evaluating a potential software licensing partnership. Confidential information includes source code, business plans, and financial projections. Term: 2 years.' },
+  rfe: { partyA: 'Carlos Mendez', partyB: 'EAC2415678901', details: 'H-1B RFE response. Issues: specialty occupation and employer-employee relationship. RFE requests detailed job description, degree equivalence evidence, and LCAs. Beneficiary has BS in Computer Science, 5 years experience.' },
+  contract: { partyA: 'Lone Star Properties', partyB: 'Houston Retail Group LLC', details: 'Commercial lease agreement for 5,000 sq ft retail space in Austin. Term: 5 years. Monthly rent: $8,500. Triple net lease structure.' }
+};
+
+let totalCost = 0.0003;
+
+function loadExample(type) {
+  const ex = EXAMPLES[type];
+  if (!ex) return;
+  document.getElementById('docType').value = type;
+  document.getElementById('partyA').value = ex.partyA;
+  document.getElementById('partyB').value = ex.partyB;
+  document.getElementById('details').value = ex.details;
+}
+
+async function generateDoc() {
+  const btn = document.getElementById('generateBtn');
+  const output = document.getElementById('output');
+  const status = document.getElementById('status');
+  
+  const type = document.getElementById('docType').value;
+  const a = document.getElementById('partyA').value || 'N/A';
+  const b = document.getElementById('partyB').value || 'N/A';
+  const d = document.getElementById('details').value || 'Standard terms';
+  const style = document.getElementById('style').value;
+  
+  if (!d || d === 'Standard terms') {
+    output.innerHTML = 'Please fill in the Key Details field.';
+    return;
+  }
+  
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+  btn.classList.add('loading');
+  output.classList.remove('empty');
+  output.innerHTML = '⏳ Generating document with GPT-4o-mini...\n\nThis takes 8-15 seconds.';
+  status.textContent = 'Generating...';
+  status.className = 'status';
+  
+  const SYSTEM = style 
+    ? `You are a Texas legal document generator. Use the firm's style: ${style}. Professional, accurate, ready-to-file format.`
+    : `You are a Texas law firm document generator. Professional legal format, accurate, ready to file or send to client.`;
+  
+  const prompt = PROMPTS[type](a, b, d);
+  
+  const start = Date.now();
+  
+  try {
+    const response = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: SYSTEM },
+          { role: 'user', content: prompt }
+        ],
+        max_tokens: 2000,
+        temperature: 0.3
+      })
+    });
+    
+    const data = await response.json();
+    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+    const tokens = data.usage?.total_tokens || 0;
+    const docCost = (tokens * 0.15 / 1_000_000) + (data.usage?.completion_tokens || 0) * 0.60 / 1_000_000;
+    totalCost += docCost;
+    
+    if (data.error) {
+      output.innerHTML = 'Error: ' + JSON.stringify(data.error);
+      status.textContent = 'Error';
+      status.className = 'status';
+    } else {
+      output.innerHTML = data.choices[0].message.content;
+      output.innerHTML = `<div class="output-meta">
+        <span>📄 ${DOC_NAMES[type]}</span>
+        <span class="cost">⚡ ${tokens} tokens</span>
+        <span class="time">⏱ ${elapsed}s</span>
+        <span class="cost">💰 $${docCost.toFixed(4)}</span>
+      </div>` + output.innerHTML;
+      
+      document.getElementById('costUsed').textContent = '$' + totalCost.toFixed(4);
+      document.getElementById('costBar').style.width = Math.min((totalCost / 100) * 100, 100) + '%';
+      
+      status.textContent = '✅ Document generated successfully';
+      status.className = 'status active';
+    }
+  } catch(e) {
+    output.innerHTML = 'Network error: ' + e.message;
+    status.textContent = 'Error';
+    status.className = 'status';
+  }
+  
+  btn.disabled = false;
+  btn.textContent = 'Generate Document';
+  btn.classList.remove('loading');
+}
+
+// Load default example
+loadExample('rfe');
+</script>
+</body>
+</html>
