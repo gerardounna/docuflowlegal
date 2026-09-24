@@ -18,6 +18,12 @@
     .hero-cta { display: inline-block; background: #3b82f6; color: white; padding: 16px 40px; border-radius: 8px; font-size: 1.05rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; }
     .hero-cta:hover { background: #2563eb; transform: translateY(-1px); }
     .hero small { display: block; margin-top: 12px; color: #64748b; font-size: 0.85rem; }
+    .hero-cta-group { display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 4px; }
+    .hero-cta-secondary { display: inline-block; background: transparent; color: #60a5fa; padding: 14px 32px; border-radius: 8px; font-size: 1rem; font-weight: 600; text-decoration: none; border: 2px solid #60a5fa; cursor: pointer; }
+    .hero-cta-secondary:hover { background: rgba(96,165,250,0.1); }
+    .hero-cta-group { display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 4px; }
+    .hero-cta-secondary { display: inline-block; background: transparent; color: #60a5fa; padding: 14px 32px; border-radius: 8px; font-size: 1rem; font-weight: 600; text-decoration: none; border: 2px solid #60a5fa; cursor: pointer; }
+    .hero-cta-secondary:hover { background: rgba(96,165,250,0.1); }
     .hero-note { margin-top: 20px; font-size: 0.85rem; color: #475569; }
 
     /* STATS BAR */
@@ -117,10 +123,11 @@
     <div class="hero-badge">For Texas Law Firms · 2–30 Attorneys</div>
     <h1>Your Firm Bills 40% of Its Hours<br><span>to Documents That Could Write Themselves</span></h1>
     <p class="sub">DocuFlow Legal trains AI on your firm's actual petitions, contracts and filings — and automates the repetitive drafts your associates spend 14–18 hours a week producing manually.</p>
-    <a href="docuflow-product/demo-interface.html" class="hero-cta" style="background:#22c55e;">Try Live Demo — Generate a Document</a>
-    <p class="hero-note" style="margin-top:8px;"><a href="booking-page.html" style="color:#888;">Or book a full demo →</a></p>
-    <p class="hero-note">We show you YOUR documents automated. No templates, no generic demos.</p>
-    <p class="hero-note">Setup takes 1–2 weeks. Onboarding included in setup fee.</p>
+    <div class="hero-cta-group">
+      <a href="https://docuflowlegal.com/booking-page.html" class="hero-cta" style="background:#22c55e;font-size:1.1rem;">🚀 Start Free 3-Document Pilot →</a>
+      <a href="https://docuflowlegal.com/booking-page.html" class="hero-cta-secondary">📹 Watch Live Demo →</a>
+    </div>
+    <p class="hero-note" style="margin-top:16px;font-size:0.88rem;color:#64748b;">No commitment · We receive 3 documents from your practice area · Return AI-drafted versions in 24–48 hours · You review</p>
   </div>
 </section>
 
