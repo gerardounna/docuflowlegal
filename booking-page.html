@@ -151,8 +151,12 @@
             <option>Other</option>
           </select>
           <textarea id="documents" rows="3" placeholder="What document types does your firm handle most? (e.g., immigration petitions, contracts, lease agreements)"></textarea>
-          <button type="submit" class="demo-btn">📅 Request My Free Demo</button>
+          <button type="submit" class="demo-btn" id="demo-submit-btn">📅 Request My Free Demo</button>
         </form>
+        <div id="mailto-fallback" style="display:none; text-align:center; margin-top:20px; padding:20px; background:rgba(255,255,255,0.05); border-radius:12px;">
+          <p style="color:#94a5b8; font-size:0.9rem; margin-bottom:12px;">Your email client didn't open automatically.</p>
+          <a href="#" id="mailto-link" style="color:#60a5fa; font-weight:600; font-size:0.95rem;">📧 Click here to send your demo request by email</a>
+        </div>
         <p style="text-align:center;margin-top:14px;font-size:0.85rem;color:#64748b;">
           Or <a href="https://docuflowlegal.com/docuflow-product/demo-interface.html" target="_blank" style="color:#22c55e;font-weight:600;">→ Try the live AI document generator now</a> — no signup needed
         </p>
@@ -161,8 +165,9 @@
       <div id="success-demo" class="success">
         <div class="success-icon"><span>✓</span></div>
         <h2>Request received!</h2>
-        <p>We'll reach out within 1 business day to schedule your session. Check your inbox — we'll send a calendar link and a prep guide.</p>
-        <p style="margin-top:12px; font-size:0.9rem; color:#64748b;">Prefer to start now? <a href="#" onclick="switchTab('start'); return false;" style="color:#3b82f6;">See pricing and pay setup →</a></p>
+        <p style="color:#94a5b8; font-size:0.95rem; margin-bottom:8px;">We'll reach out within 1 business day to schedule your session. Check your inbox — we'll send a calendar link and a prep guide.</p>
+        <p style="color:#94a5b8; font-size:0.85rem;">While you wait: <a href="https://docuflowlegal.com/docuflow-product/demo-interface.html" target="_blank" style="color:#60a5fa;">try the live document generator →</a></p>
+        <p style="margin-top:16px; font-size:0.9rem; color:#64748b;">Prefer to start now? <a href="#" onclick="switchTab('start'); return false;" style="color:#3b82f6;">See pricing and pay setup →</a></p>
       </div>
 
       <p class="note">Free 30-minute session · No commitment · Reply within 1 business day</p>
@@ -255,8 +260,13 @@ function switchTab(tab) {
   }
 }
 
+// Formspree endpoint — replace FORMSPREE_FORM_ID with your form ID from formspree.io
+const FORMSPREE_URL = 'https://formspree.io/f/FORMSPREE_FORM_ID';
+const CF_WORKER_URL = 'https://docuflow-api.workers.dev/api/demo-request';
+
 function submitDemo(e) {
   e.preventDefault();
+  const btn = document.getElementById('demo-submit-btn');
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
   const firm = document.getElementById('firm').value;
@@ -264,6 +274,7 @@ function submitDemo(e) {
   const documents = document.getElementById('documents').value;
   const attorneys = document.getElementById('attorneys').value;
 
+  // Build mailto link (fallback)
   const subject = encodeURIComponent('Demo Request — ' + firm);
   const body = encodeURIComponent(
     'Name: ' + name + '\n' +
@@ -273,10 +284,64 @@ function submitDemo(e) {
     'Practice: ' + practice + '\n' +
     'Top documents: ' + documents
   );
+  const mailtoHref = 'mailto:hello@docuflowlegal.com?subject=' + subject + '&body=' + body;
 
-  window.location.href = 'mailto:hello@docuflowlegal.com?subject=' + subject + '&body=' + body;
-  document.getElementById('form-container').style.display = 'none';
-  document.getElementById('success-demo').classList.add('show');
+  // Set up fallback click handler
+  const mailtoLink = document.getElementById('mailto-link');
+  const mailtoFallback = document.getElementById('mailto-fallback');
+  mailtoLink.href = mailtoHref;
+  mailtoLink.onclick = function() {
+    window.location.href = mailtoHref;
+    document.getElementById('form-container').style.display = 'none';
+    document.getElementById('success-demo').classList.add('show');
+  };
+
+  // Loading state
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  // Try Formspree first (if form ID is configured)
+  if (FORMSPREE_URL.indexOf('FORMSPREE_FORM_ID') === -1) {
+    fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ name, email, firm, attorneys, practice, documents })
+    }).then(function(res) {
+      if (res.ok) {
+        document.getElementById('form-container').style.display = 'none';
+        document.getElementById('success-demo').classList.add('show');
+      } else {
+        // Formspree failed — use mailto fallback
+        showMailtoFallback();
+      }
+    }).catch(function() {
+      showMailtoFallback();
+    });
+  } else {
+    // No Formspree configured — try CF Worker
+    fetch(CF_WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, firm, attorneys, practice, documents })
+    }).then(function(res) {
+      if (res.ok) {
+        document.getElementById('form-container').style.display = 'none';
+        document.getElementById('success-demo').classList.add('show');
+      } else {
+        showMailtoFallback();
+      }
+    }).catch(function() {
+      showMailtoFallback();
+    });
+  }
+
+  function showMailtoFallback() {
+    btn.textContent = '📧 Open Email App';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    mailtoFallback.style.display = 'block';
+  }
 }
 </script>
 
