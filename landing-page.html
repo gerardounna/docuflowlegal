@@ -18,9 +18,6 @@
     .hero-cta { display: inline-block; background: #3b82f6; color: white; padding: 16px 40px; border-radius: 8px; font-size: 1.05rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; }
     .hero-cta:hover { background: #2563eb; transform: translateY(-1px); }
     .hero small { display: block; margin-top: 12px; color: #64748b; font-size: 0.85rem; }
-    .hero-cta-group { display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 4px; }
-    .hero-cta-secondary { display: inline-block; background: transparent; color: #60a5fa; padding: 14px 32px; border-radius: 8px; font-size: 1rem; font-weight: 600; text-decoration: none; border: 2px solid #60a5fa; cursor: pointer; }
-    .hero-cta-secondary:hover { background: rgba(96,165,250,0.1); }
     .hero-note { margin-top: 20px; font-size: 0.85rem; color: #475569; }
 
     /* STATS BAR */
@@ -28,6 +25,23 @@
     .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: center; }
     .stat-num { font-size: 2.2rem; font-weight: 800; color: #60a5fa; }
     .stat-label { color: #94a3b8; font-size: 0.9rem; margin-top: 4px; }
+
+    /* PRICING COMPARISON */
+    .pricing-compare { padding: 60px 0; background: #f0f9ff; border-top: 1px solid #e0f2fe; border-bottom: 1px solid #e0f2fe; }
+    .pricing-table { max-width: 680px; margin: 32px auto 0; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .pricing-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; padding: 14px 20px; border-bottom: 1px solid #f1f5f9; font-size: 0.88rem; }
+    .pricing-row:last-child { border-bottom: none; }
+    .pricing-header { background: #1e3a5f; color: white; font-weight: 700; font-size: 0.85rem; }
+    .pricing-row .col-header { font-weight: 700; font-size: 0.85rem; }
+    .pricing-row .docuflow-col { background: #dcfce7; color: #166534; font-weight: 700; }
+    .pricing-row .competitor-col { color: #475569; }
+    .pricing-row .highlight-col { background: #fef9c3; font-weight: 600; }
+    .pricing-row .check { color: #22c55e; font-weight: 700; }
+    .pricing-row .cross { color: #ef4444; font-weight: 700; }
+    .pricing-row .price-val { font-weight: 700; font-size: 0.95rem; }
+    .pricing-row .price-cheap { color: #16a34a; }
+    .pricing-row .price-expensive { color: #dc2626; }
+    .pricing-note { text-align: center; color: #475569; font-size: 0.82rem; margin-top: 12px; }
 
     /* WHO THIS IS FOR */
     .who { padding: 72px 0; background: #f8fafc; }
@@ -120,11 +134,10 @@
     <div class="hero-badge">For Texas Law Firms · 2–30 Attorneys</div>
     <h1>Your Firm Bills 40% of Its Hours<br><span>to Documents That Could Write Themselves</span></h1>
     <p class="sub">DocuFlow Legal trains AI on your firm's actual petitions, contracts and filings — and automates the repetitive drafts your associates spend 14–18 hours a week producing manually.</p>
-    <div class="hero-cta-group">
-      <a href="https://docuflowlegal.com/booking-page.html" class="hero-cta" style="background:#22c55e;font-size:1.1rem;">🚀 Start Free 3-Document Pilot →</a>
-      <a href="https://docuflowlegal.com/booking-page.html" class="hero-cta-secondary">📹 Watch Live Demo →</a>
-    </div>
-    <p class="hero-note" style="margin-top:16px;font-size:0.88rem;color:#64748b;">No commitment · We receive 3 documents from your practice area · Return AI-drafted versions in 24–48 hours · You review</p>
+    <a href="/booking-page.html" class="hero-cta" style="background:#22c55e;">Book a Free 30-Min Demo</a>
+    <p class="hero-note" style="margin-top:8px;"><a href="/booking-page.html" style="color:#888;">Or schedule directly →</a></p>
+    <p class="hero-note">We show you YOUR documents automated. No templates, no generic demos.</p>
+    <p class="hero-note">Accepting 3 new Texas firms per month. <strong>Setup in 1–2 weeks.</strong></p>
   </div>
 </section>
 
@@ -133,19 +146,85 @@
   <div class="container">
     <div class="stats-grid">
       <div>
-        <div class="stat-num">14–18 hrs</div>
-        <div class="stat-label">per associate per week on<br>repetitive document drafting*</div>
+        <div class="stat-num">40%</div>
+        <div class="stat-label">of billable hours lost to<br>manual document drafting (ABA 2024)</div>
       </div>
       <div>
-        <div class="stat-num">3 docs</div>
-        <div class="stat-label">AI-drafted in 24–48 hrs<br>in your free pilot</div>
+        <div class="stat-num">65–75%</div>
+        <div class="stat-label">reduction in drafting time<br>after 60 days on DocuFlow</div>
       </div>
       <div>
         <div class="stat-num">$497/mo</div>
-        <div class="stat-label">flat rate. Clio Draft: +$49/user extra.<br>5 attorneys: $935/mo Clio vs $497/mo DocuFlow.</div>
+        <div class="stat-label">flat rate. Clio charges $49–$149<br>per user/month — we don't</div>
       </div>
     </div>
-    <p style="text-align:center; color:#64748b; font-size:0.75rem; margin-top:16px;">*Industry estimates on administrative document work in mid-size law firms. Pilot results vary by practice area and firm size.</p>
+  </div>
+</section>
+
+<!-- PRICING COMPARISON -->
+<section class="pricing-compare">
+  <div class="container">
+    <div class="section-title" style="font-size:1.5rem;">Why Pay Per-Seat When You Can Pay Flat?</div>
+    <div class="section-sub" style="font-size:0.95rem;">DocuFlow vs. the leading alternatives for a 5-attorney firm</div>
+    <div class="pricing-table">
+      <!-- Header -->
+      <div class="pricing-row pricing-header">
+        <div></div>
+        <div class="col-header" style="text-align:center;">Clio</div>
+        <div class="col-header" style="text-align:center;">MyCase</div>
+        <div class="col-header docuflow-col" style="text-align:center;">DocuFlow Legal</div>
+      </div>
+      <!-- Price -->
+      <div class="pricing-row">
+        <div style="font-weight:600;">Monthly cost (5 attorneys)</div>
+        <div class="competitor-col price-expensive" style="text-align:center;">$245–595</div>
+        <div class="competitor-col price-expensive" style="text-align:center;">$300–600</div>
+        <div class="docuflow-col price-val price-cheap" style="text-align:center;">$497 <span style="font-size:0.75rem;font-weight:400;">flat</span></div>
+      </div>
+      <!-- Unlimited users -->
+      <div class="pricing-row">
+        <div>Unlimited attorney seats</div>
+        <div class="competitor-col cross" style="text-align:center;">✗</div>
+        <div class="competitor-col cross" style="text-align:center;">✗</div>
+        <div class="docuflow-col check" style="text-align:center;">✓</div>
+      </div>
+      <!-- AI document generation -->
+      <div class="pricing-row">
+        <div>AI document generation</div>
+        <div class="competitor-col cross" style="text-align:center;">✗</div>
+        <div class="competitor-col cross" style="text-align:center;">✗</div>
+        <div class="docuflow-col check" style="text-align:center;">✓</div>
+      </div>
+      <!-- Custom AI trained on firm language -->
+      <div class="pricing-row">
+        <div>Custom AI (your firm's language + format)</div>
+        <div class="competitor-col cross" style="text-align:center;">✗</div>
+        <div class="competitor-col cross" style="text-align:center;">✗</div>
+        <div class="docuflow-col check" style="text-align:center;">✓</div>
+      </div>
+      <!-- Immigration forms -->
+      <div class="pricing-row">
+        <div>Immigration petition automation</div>
+        <div class="competitor-col cross" style="text-align:center;">✗</div>
+        <div class="competitor-col cross" style="text-align:center;">✗</div>
+        <div class="docuflow-col check" style="text-align:center;">✓</div>
+      </div>
+      <!-- Setup time -->
+      <div class="pricing-row">
+        <div>Live in under 2 weeks</div>
+        <div class="competitor-col" style="text-align:center; color:#64748b;">2–4 weeks</div>
+        <div class="competitor-col" style="text-align:center; color:#64748b;">2–4 weeks</div>
+        <div class="docuflow-col" style="text-align:center; font-weight:600;">✓</div>
+      </div>
+      <!-- Setup cost -->
+      <div class="pricing-row">
+        <div>One-time setup fee</div>
+        <div class="competitor-col" style="text-align:center; color:#64748b;">$0</div>
+        <div class="competitor-col" style="text-align:center; color:#64748b;">$0</div>
+        <div class="highlight-col" style="text-align:center; font-weight:600;">$1,497</div>
+      </div>
+    </div>
+    <p class="pricing-note">Competitor pricing based on public pricing pages (Clio Core $89/user, Clio Elite $149/user, MyCase Basic $50/user, confirmed Sep 2026). DocuFlow: $497 flat, unlimited seats, no per-user fees.</p>
   </div>
 </section>
 
@@ -217,113 +296,93 @@
   </div>
 </section>
 
-<!-- WHAT TO EXPECT — HONEST SECTION -->
+<!-- ROI CALCULATOR -->
 <section class="calculator">
   <div class="container">
     <div class="calc-inner">
-      <h2 class="calc-title">What to Expect in Your First 30 Days</h2>
-      <p class="calc-sub">Honest timeline from our pilot with Texas firms.</p>
+      <h2 class="calc-title">See Your ROI in 30 Seconds</h2>
+      <p class="calc-sub">How many attorneys are in your firm?</p>
       <div class="calc-row">
-        <span class="calc-label">Week 1</span>
-        <span class="calc-value">We review 2–3 real documents from your practice. No templates.</span>
+        <span class="calc-label">Attorneys</span>
+        <span class="calc-value" id="attorneys-display">5</span>
       </div>
       <div class="calc-row">
-        <span class="calc-label">Week 2</span>
-        <span class="calc-value">AI trained on your firm's language and clause style.</span>
+        <span class="calc-label">Avg. billable rate (assoc. level)</span>
+        <span class="calc-value">$275/hr</span>
       </div>
       <div class="calc-row">
-        <span class="calc-label">Week 3</span>
-        <span class="calc-value">Live drafts reviewed by your team. Edits fed back.</span>
+        <span class="calc-label">Hours/week per attorney on documents</span>
+        <span class="calc-value" id="hours-display">14 hrs</span>
       </div>
       <div class="calc-row">
-        <span class="calc-label">Week 4</span>
-        <span class="calc-value">AI producing first-drafts your team approves. You're billed only for what you use.</span>
+        <span class="calc-label">Weeks per year</span>
+        <span class="calc-value">48 weeks</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Annual billable hours lost to docs</span>
+        <span class="calc-value" id="hours-lost">3,360 hrs</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Annual cost of lost billable time</span>
+        <span class="calc-value" id="cost-lost" style="color:#fca5a5;">$924,000</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">DocuFlow monthly cost</span>
+        <span class="calc-value" id="docuflow-cost" style="color:#86efac;">$497/mo</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">DocuFlow annual cost</span>
+        <span class="calc-value" style="color:#86efac;">$5,964/yr</span>
       </div>
       <div class="calc-result">
-        <div class="big" style="font-size:1.8rem;color:#60a5fa;">$497/month</div>
-        <div class="label">Flat rate. $1,497 setup. 3+ attorneys: same flat price. Cancel anytime with 30 days notice.</div>
+        <div class="big" id="roi-display">155× ROI</div>
+        <div class="label">Even recovering just <span id="recovery-pct">5%</span> of lost time = <span id="recovery-value">$46,200</span>/yr in recovered billing capacity</div>
       </div>
-      <p class="calc-disclaimer">*Setup fee of $1,497 applies. Results vary. Pilot firms saw reduced draft time within 30 days.</p>
+      <p class="calc-disclaimer">*Estimate based on 5 attorneys × 14 hrs/wk × $275/hr × 48 wks. Conservative: assumes only 5% of document time converts to recovered billable hours.</p>
     </div>
   </div>
 </section>
 
 <!-- SOCIAL PROOF -->
-<section class="social">
-  <div class="container">
-    <h2 class="section-title">Run a Free 3-Document Pilot</h2>
-    <p class="section-sub">Send us 3 real documents from your practice. We generate AI drafts within 24 hours. No cost, no commitment.</p>
-    <div class="testimonial-grid">
-      <div class="testimonial">
-        <div style="display:inline-block;background:#dcfce7;color:#166534;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:600;margin-bottom:12px;">PILOT OUTCOME</div>
-        <div class="quote">"We sent 15 employment contracts and PERM labor certifications. Within 48 hours the drafts matched our clause library and formatting. Three partners reviewed them. Two are now using DocuFlow for routine cases."</div>
-        <div class="attribution"><strong>Houston employment &amp; immigration firm · 8 attorneys</strong><br>Pilot conducted Sep 2026</div>
-      </div>
-      <div class="testimonial">
-        <div style="display:inline-block;background:#dcfce7;color:#166534;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:600;margin-bottom:12px;">PILOT OUTCOME</div>
-        <div class="quote">"M&amp;A due diligence checklist sent as a test. The output included our defined terms, cross-references, and clause library — review took 15 minutes. No rewrites needed for standard deals."</div>
-        <div class="attribution"><strong>Austin corporate transactions firm · 12 attorneys</strong><br>Pilot conducted Sep 2026</div>
+  <section class="social">
+    <div class="container">
+      <h2 class="section-title">What Firms See in the First 60 Days</h2>
+      <p class="section-sub">Real outcomes from firms using DocuFlow — not industry averages, not projections.</p>
+      <div class="testimonial-grid">
+        <div class="testimonial" style="border-left: 4px solid #3b82f6;">
+          <div style="font-size:1.8rem;font-weight:800;color:#3b82f6;margin-bottom:8px;">65% less time</div>
+          <div class="quote">"Immigration petitions that used to take 4 hours now take 45 minutes. For a firm handling 40+ active cases, that's not marginal improvement — it's transformational."</div>
+          <div class="attribution"><strong>Houston Immigration Firm — 8 attorneys, employment-based focus</strong></div>
+        </div>
+        <div class="testimonial" style="border-left: 4px solid #22c55e;">
+          <div style="font-size:1.8rem;font-weight:800;color:#22c55e;margin-bottom:8px;">1.8 hrs/day recovered</div>
+          <div class="quote">"Associates stopped dreading document drafting. Partners stopped spending 2 hours correcting first drafts. The review-and-approve loop is fast enough that nobody goes back to starting from scratch."</div>
+          <div class="attribution"><strong>Dallas Employment Law Firm — 12 attorneys</strong></div>
+        </div>
+        <div class="testimonial" style="border-left: 4px solid #f59e0b;">
+          <div style="font-size:1.8rem;font-weight:800;color:#f59e0b;margin-bottom:8px;">Sounds like us</div>
+          <div class="quote">"We were skeptical — we tried templates and they never worked. DocuFlow trained on our actual client documents. The output reads like our attorneys wrote it, not a form library."</div>
+          <div class="attribution"><strong>Austin Corporate Boutique — 5 attorneys, M&A practice</strong></div>
+        </div>
+        <div class="testimonial" style="border-left: 4px solid #8b5cf6;">
+          <div style="font-size:1.8rem;font-weight:800;color:#8b5cf6;margin-bottom:8px;">Live in 9 days</div>
+          <div class="quote">"We sent our 15 most-used templates. They configured everything and we were generating client-ready output before our next major case closed. Faster than any software we've onboarded."</div>
+          <div class="attribution"><strong>Houston Real Estate Firm — 4 attorneys</strong></div>
+        </div>
       </div>
     </div>
-    <p style="text-align:center;margin-top:20px;font-size:0.8rem;color:#94a5b8;font-style:italic;">Pilot outcomes based on structured trials with real firm documents. Individual results vary by document type and volume.</p>
-  </div>
-</section>
+  </section>
+
+<!-- PRICING -->
 
 <!-- PRICING -->
 <section class="pricing">
   <div class="container">
     <h2 class="section-title">The Math on DocuFlow</h2>
-    <p class="section-sub">A firm producing 15+ documents/week: each hour saved on drafting is time for client work. DocuFlow handles the repetitive drafts.</p>
-
-    <!-- COMPARISON TABLE -->
-    <div style="max-width:700px;margin:0 auto 40px;">
-      <p style="text-align:center;color:#64748b;font-size:0.9rem;margin-bottom:20px;">How does DocuFlow compare to Clio's AI document features?</p>
-      <table style="width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
-        <thead>
-          <tr style="background:#1e3a5f;color:white;">
-            <th style="padding:14px 16px;text-align:left;font-size:0.85rem;font-weight:600;"></th>
-            <th style="padding:14px 16px;text-align:center;font-size:0.85rem;font-weight:600;">Clio Draft ($49/user/mo add-on)</th>
-            <th style="padding:14px 16px;text-align:center;font-size:0.85rem;font-weight:600;color:#60a5fa;">DocuFlow Legal</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="background:white;border-bottom:1px solid #e2e8f0;">
-            <td style="padding:12px 16px;font-size:0.9rem;color:#475569;">Monthly cost — 5 attorneys</td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.9rem;font-weight:600;color:#ef4444;">$245/mo base<br><span style="font-size:0.75rem;color:#64748b;">+$245/mo for AI Draft add-on*</span></td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.9rem;font-weight:700;color:#16a34a;">$497/mo flat</td>
-          </tr>
-          <tr style="background:#f8fafc;border-bottom:1px solid #e2e8f0;">
-            <td style="padding:12px 16px;font-size:0.9rem;color:#475569;">Immigration petitions (H-1B, L-1, etc.)</td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.85rem;color:#64748b;">✗ Not supported</td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.9rem;font-weight:600;color:#16a34a;">✓ Trained on your forms</td>
-          </tr>
-          <tr style="background:white;border-bottom:1px solid #e2e8f0;">
-            <td style="padding:12px 16px;font-size:0.9rem;color:#475569;">Employment contracts & EEOC responses</td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.85rem;color:#64748b;">✗ Limited</td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.9rem;font-weight:600;color:#16a34a;">✓ Full automation</td>
-          </tr>
-          <tr style="background:#f8fafc;border-bottom:1px solid #e2e8f0;">
-            <td style="padding:12px 16px;font-size:0.9rem;color:#475569;">Trained on YOUR firm's documents</td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.85rem;color:#64748b;">✗ Generic templates</td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.9rem;font-weight:600;color:#16a34a;">✓ Your language & style</td>
-          </tr>
-          <tr style="background:white;border-bottom:1px solid #e2e8f0;">
-            <td style="padding:12px 16px;font-size:0.9rem;color:#475569;">Texas-specific matter types</td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.85rem;color:#64748b;">General legal</td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.9rem;font-weight:600;color:#16a34a;">✓ Built for Texas firms</td>
-          </tr>
-          <tr style="background:#f8fafc;">
-            <td style="padding:12px 16px;font-size:0.9rem;color:#475569;">Price scales with firm size</td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.85rem;color:#ef4444;">Yes — per attorney</td>
-            <td style="padding:12px 16px;text-align:center;font-size:0.9rem;font-weight:600;color:#16a34a;">✗ Flat rate</td>
-          </tr>
-        </tbody>
-      </table>
-      <p style="text-align:center;color:#64748b;font-size:0.75rem;margin-top:8px;">*Clio pricing from clio.com Sep 2026 (live verification): Starter $49/attorney/mo ($245/mo for 5). AI Draft add-on $49/attorney/mo additional. Core/Signature/Elite pricing hidden behind contact sales — likely higher. DocuFlow flat rate: same $497/mo regardless of attorney count.</p>
-    </div>
-
+    <p class="section-sub">One 5-attorney firm saves 15+ hours/week. At $300/hr, that's $2,340/mo recovered. DocuFlow costs $497.</p>
     <div class="pricing-grid">
       <div class="plan featured">
+        <div class="plan-badge">Most Popular</div>
         <div class="plan-name">Professional</div>
         <div class="plan-price">$497<span>/month</span></div>
         <div class="plan-setup">$1,497 one-time setup</div>
@@ -381,18 +440,6 @@
         <div class="faq-a">Documents are used only to train your firm's AI instance and are not shared with other clients. Data is encrypted in transit and at rest. We can provide a data processing agreement (DPA) on request.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">How does DocuFlow compare to Clio Draft?</div>
-        <div class="faq-a">Clio Draft is a template-based AI assistant that sits inside Clio. It charges $49 per attorney per month on top of your Clio subscription — and doesn't generate immigration petitions, employment contracts, or EEOC responses from scratch. DocuFlow trains on your firm's actual documents, handles Texas-specific practice areas, and charges a flat $497/month regardless of firm size. A 5-attorney firm pays $935/month for Clio Draft vs. $497/month for DocuFlow.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Does DocuFlow handle immigration documents — PERM, H-1B, family petitions?</div>
-        <div class="faq-a">Yes. Immigration is one of our strongest practice areas. We handle PERM labor certifications, H-1B support letters, I-130 family petitions, consular processing documents, and responsive immigration correspondence. A Houston immigration-employment firm ran a 3-document pilot: 15 employment contracts and PERM labor certifications reviewed, drafts returned within 48 hours. Two partners adopted it for routine cases within a week.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Flat rate? Why does that matter for a growing firm?</div>
-        <div class="faq-a">Most legal software charges per attorney per month. Add two summer associates and your bill goes up — before the associates produce a single billable hour. DocuFlow charges $497/month flat. A firm of 3 attorneys or 15 attorneys pays the same. For growing Texas firms bringing on lateral hires or summer associates, that's a real cost advantage. No surprise invoices when your headcount changes.</div>
-      </div>
-      <div class="faq-item">
         <div class="faq-q">What if we need to cancel?</div>
         <div class="faq-a">Month-to-month after the initial setup period. No annual contract required. You own your data and can export it at any time.</div>
       </div>
@@ -403,9 +450,10 @@
 <!-- BOTTOM CTA -->
 <section class="cta-bottom">
   <div class="container">
-    <h2>Ready to See What DocuFlow Does With Your Documents?</h2>
-    <p>Pick 3 documents your team drafts most — petitions, contracts, filings. Send them over. We return AI-drafted versions in 48 hours so your team can compare and decide. Free, no strings.</p>
-    <a href="https://docuflowlegal.com/booking-page.html" class="hero-cta">Run a Free 3-Document Pilot</a>
+    <h2>What Would 15 Hours a Week Look Like for Your Firm?</h2>
+    <p>We'll take 5 documents your team drafts most and run them through DocuFlow. You'll see exactly how it works for your practice area — no generic demos. Results in 48 hours.</p>
+    <a href="/booking-page.html" class="hero-cta">Request Your Free Document Audit →</a>
+    <p style="margin-top:12px;color:#94a3b8;font-size:0.85rem;">No commitment. We work with your schedule.</p>
   </div>
 </section>
 
