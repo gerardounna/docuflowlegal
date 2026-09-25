@@ -173,7 +173,7 @@
       </ul>
     </div>
 
-    <form id="demo-form" name="demo-request" data-netlify="true" onsubmit="handleSubmit(event)">
+    <form id="demo-form" name="demo-request" action="https://formspree.io/f/xpwzvqvj" method="POST" onsubmit="handleSubmit(event)">
       <input type="hidden" name="form-name" value="demo-request">
       <input type="text" name="name" placeholder="Your name" required>
       <input type="text" name="firm" placeholder="Law firm name" required>
@@ -202,7 +202,7 @@
     <p class="note">We respond within 2 hours during business hours.</p>
     <p style="text-align:center;margin-top:12px;">
       Prefer to book directly? 
-      <a href="https://cal.com/tyler-brooks/docuflow-demo" target="_blank" style="color:#2563eb;font-weight:600;">Schedule on our calendar →</a>
+      <a href="https://calendly.com/docuflow/30min" target="_blank" style="color:#2563eb;font-weight:600;">Schedule on our calendar →</a>
     </p>
   </div>
 
@@ -210,7 +210,7 @@
     <div class="success-icon">✓</div>
     <h2>Request received!</h2>
     <p>Confirm your demo time — book directly on our calendar:</p>
-      <p style="margin:16px 0;"><a href="https://cal.com/tyler-brooks/docuflow-demo" style="background:#2563eb;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:1rem;display:inline-block;" target="_blank">Book Your 30-Min Demo Now</a></p>
+      <p style="margin:16px 0;"><a href="https://calendly.com/docuflow/30min" style="background:#2563eb;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:1rem;display:inline-block;" target="_blank">Book Your 30-Min Demo Now</a></p>
       <p style="color:#64748b;font-size:0.85rem;">Or reply to our email - we check daily.</p>
       <p></p>
     <div style="margin-top:20px;padding:20px;background:#f0f9ff;border-radius:12px;border:1.5px solid #bfdbfe;text-align:left;">
@@ -243,52 +243,16 @@ function handleSubmit(e) {
   btn.textContent = 'Sending...';
   btn.disabled = true;
   
-  // Recopilar datos
-  var form = document.getElementById('demo-form');
-  var data = {
-    name: form.name.value,
-    firm: form.firm.value,
-    email: form.email.value,
-    phone: form.phone.value,
-    size: form.size.value,
-    practice: form.practice.value,
-    pain: form.pain.value,
-    source: 'booking-page'
-  };
-  
-  // Enviar por email usando mailto como fallback
-  var subject = encodeURIComponent('Demo Request: ' + data.firm + ' - ' + data.name);
-  var body = encodeURIComponent(
-    'Nombre: ' + data.name + '\n' +
-    'Firma: ' + data.firm + '\n' +
-    'Email: ' + data.email + '\n' +
-    'Teléfono: ' + data.phone + '\n' +
-    'Tamaño: ' + data.size + '\n' +
-    'Práctica: ' + data.practice + '\n' +
-    'Pain: ' + data.pain
-  );
-  
-  // Netlify Forms handles this. Also try direct to Netlify functions as backup.
-  var params = new URLSearchParams();
-  params.append('name', data.name);
-  params.append('firm', data.firm);
-  params.append('email', data.email);
-  params.append('phone', data.phone);
-  params.append('size', data.size);
-  params.append('practice', data.practice);
-  params.append('pain', data.pain);
-  params.append('source', 'booking-page');
-
-  fetch('/.netlify/functions/demo-request', {
+  // Formspree handles the POST natively — just show success
+  var formEl = document.getElementById('demo-form');
+  var formData = new FormData(formEl);
+  fetch(formEl.action, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params
-  }).then(function(response) {
-    if (!response.ok) throw new Error('Request failed');
+    body: formData
+  }).then(function() {
     document.getElementById('form-container').style.display = 'none';
     document.getElementById('success-container').style.display = 'block';
   }).catch(function() {
-    // Fallback: Netlify Forms will catch this if JS fails
     document.getElementById('form-container').style.display = 'none';
     document.getElementById('success-container').style.display = 'block';
   });
