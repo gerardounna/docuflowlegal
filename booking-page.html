@@ -149,17 +149,60 @@
       <div style="margin-top:8px;font-size:0.75rem;color:#64748b;">AI-generated · Ready in seconds · Your firm branding</div>
     </div>
     <script>
+    var DEMO_API = 'https://guards-standings-clouds-december.trycloudflare.com/api/generate-document';
+
     function showSample(type) {
-      var samples = {
-        nda: { label: 'Non-Disclosure Agreement — Texas Corporate', text: 'PARTIES:\\nDisclosing Party: [Your Firm Name], a Texas professional corporation\\nReceiving Party: [Counterparty Name]\\n\\nEFFECTIVE DATE: [Date]\\n\\n1. CONFIDENTIAL INFORMATION\\n"Confidential Information" means any non-public technical, business, or financial information disclosed by either party...\\n\\n2. OBLIGATIONS\\nThe Receiving Party shall: (a) hold all Confidential Information in strict confidence; (b) not disclose to any third party without prior written consent; (c) use Confidential Information solely for evaluating a potential business relationship...\\n\\n3. TERM\\nThis Agreement shall remain in effect for two (2) years from the Effective Date.' },
-        contract: { label: 'Contract Amendment — M&A Representation', text: 'REPRESENTATIONS AND WARRANTIES OF SELLER\\n\\nSeller hereby represents and warrants to Buyer as of the date hereof and as of the Closing Date as follows:\\n\\n4.1 Organization and Good Standing. Seller is duly organized, validly existing, and in good standing under the laws of the State of Texas...' },
-        email: { label: 'Client Status Update — Immigration', text: 'Subject: Update on Your I-485 Application — Receipt Confirmed\\n\\nDear [Client Name],\\n\\nI wanted to reach out personally to let you know we received confirmation that your I-485 application has been accepted and is now pending with USCIS...\\n\\nBased on current processing times for the Dallas Field Office, we can expect a decision within [X] months...' },
-        memo: { label: 'Internal Legal Memo — Case Assessment', text: 'MEMORANDUM\\n\\nTO: [Attorney/Partner]\\nFROM: [Associate]\\nRE: [Matter Name] — Initial Case Assessment\\nDATE: [Date]\\n\\nI. QUESTION PRESENTED\\nWhether [client] has viable claims under [Texas law / federal statute] for damages arising from [factual scenario]...\\n\\nII. BRIEF ANSWER\\nYes, with moderate confidence. The strongest theory appears to be [claim], supported by [evidence]...' }
+      var prompts = {
+        nda: {
+          label: 'Non-Disclosure Agreement — Texas Corporate',
+          prompt: 'Generate a concise Non-Disclosure Agreement (NDA) in proper Texas legal format between a Texas professional corporation and a prospective business partner. Include: parties, effective date, definition of confidential information, obligations of receiving party, exclusions, term (2 years), governing law (Texas), and signature blocks.'
+        },
+        contract: {
+          label: 'Contract Clause — Texas Employment Agreement',
+          prompt: 'Generate a standard Texas Employment Agreement clause for an at-will employee in the legal industry. Include: position and duties, compensation (salary + benefits), at-will employment language, non-compete clause (Texas HB 2696 compliant), confidentiality, intellectual property assignment, and Texas governing law.'
+        },
+        email: {
+          label: 'Client Email — I-485 Status Update',
+          prompt: 'Write a professional client email from a Texas immigration attorney informing the client that their I-485 Application to Register Permanent Residence has been received and is pending with USCIS. Include: receipt confirmation, next steps, expected timeline (Dallas Field Office), request for any additional documents, and professional tone. Keep it under 200 words.'
+        },
+        memo: {
+          label: 'Internal Legal Memo — Texas Case Assessment',
+          prompt: 'Draft an internal legal memorandum in proper Texas bar format. TO: Managing Partner, FROM: Associate, RE: Breach of Contract Claim — Commercial Lease. Include: (I) Question Presented, (II) Brief Answer, (III) Statement of Facts, (IV) Applicable Law (Texas BOC), (V) Analysis, (VI) Conclusion and Recommendations. Be specific and professional.'
+        }
       };
-      var s = samples[type];
+
+      var cfg = prompts[type];
       var el = document.getElementById('demo-output');
       el.style.display = 'block';
-      el.innerHTML = '<div style="color:#86efac;font-weight:700;margin-bottom:8px;font-size:0.75rem;">▶ ' + s.label + '</div>' + s.text.replace(/\n/g, '<br>');
+      el.innerHTML = '<div style="color:#86efac;font-weight:700;margin-bottom:8px;font-size:0.75rem;">⚡ Generating ' + cfg.label + '...</div><div style="color:#64748b;font-size:0.75rem;">Live AI · GPT-4o-mini · Texas law standards</div>';
+
+      fetch(DEMO_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          messages: [{ role: 'user', content: cfg.prompt }],
+          max_tokens: 800,
+          temperature: 0.3
+        })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.error) {
+          el.innerHTML = '<div style="color:#f87171;font-size:0.82rem;">⚠️ ' + data.error.message + '</div>';
+          return;
+        }
+        var text = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+        if (!text) { el.innerHTML = '<div style="color:#f87171;font-size:0.82rem;">⚠️ Unexpected response. Try again.</div>'; return; }
+        // Sanitize and display
+        text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        el.innerHTML = '<div style="color:#86efac;font-weight:700;margin-bottom:8px;font-size:0.75rem;">✅ ' + cfg.label + ' — AI Generated</div>' +
+          '<div style="white-space:pre-wrap;font-size:0.78rem;line-height:1.5;max-height:300px;overflow-y:auto;">' + text + '</div>' +
+          '<div style="margin-top:8px;font-size:0.7rem;color:#475569;">Powered by GPT-4o-mini · Generated in ~3 seconds · Ready to customize</div>';
+      })
+      .catch(function(err) {
+        el.innerHTML = '<div style="color:#f87171;font-size:0.82rem;">⚠️ Could not connect to demo server. Try again in a moment.</div>';
+      });
     }
     </script>
     
