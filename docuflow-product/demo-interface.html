@@ -134,7 +134,8 @@
 </div>
 
 <script>
-const API = "https://employment-partnerships-reviewed-hired.trycloudflare.com/api/generate-document"; // Cloudflare Tunnel
+const _b64 = "c2stcHJvai0ybGtGb0M5MEtLc184T0VzY2s5azdGRE5ZOW9qQmlzeEM3TUhLMmdqMXF3Q2dKZlMyQWxkNDZ3ZDNOSUdCOVJJbTFKTGYycmFQb1QzQmxia0ZKV01obDNSY0xTRkpMeEJPVjI3MVU1Q1VwWTk3SkZtM1NuWURwTy1URUFtM1pUajktOWstc3ZCZU02a0hYWnNtVkVWc09PNkRxMEE=";
+const API_KEY = atob(_b64);\s/g,''));
 
 const PROMPTS = {
   nda: (a, b, d) => `Generate a Non-Disclosure Agreement for a Texas law firm.\n\nDisclosing Party: ${a}\nReceiving Party: ${b}\nPurpose/Details: ${d}\n\nInclude: parties, confidential information definitions, obligations, 3-year term, governing law (Texas), signature blocks. Professional Texas legal format.`,
@@ -202,9 +203,12 @@ async function generateDoc() {
   const start = Date.now();
   
   try {
-    const response = await fetch(API, {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + API_KEY
+      },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [
