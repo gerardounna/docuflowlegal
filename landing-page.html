@@ -145,6 +145,40 @@
   </div>
 </section>
 
+<!-- EMAIL CAPTURE — Top of page -->
+<section style="background:#f0f9ff;border-bottom:1px solid #e0f2fe;padding:20px 0;">
+  <div class="container" style="text-align:center;">
+    <p style="color:#334155;font-size:0.95rem;margin-bottom:10px;">Not ready to book? <strong>Get a free severance agreement draft</strong> — no commitment, no sales call.</p>
+    <form id="hero-capture" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:500px;margin:0 auto;" onsubmit="handleCapture(event)">
+      <input type="email" name="email" placeholder="Your firm email" required style="flex:1;min-width:200px;padding:10px 14px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;">
+      <select name="practice" style="padding:10px 14px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#475569;">
+        <option value="">Practice area</option>
+        <option>Immigration</option>
+        <option>Employment Law</option>
+        <option>Corporate / M&A</option>
+        <option>Real Estate</option>
+        <option>Family Law</option>
+        <option>Litigation</option>
+        <option>Other</option>
+      </select>
+      <button type="submit" style="background:#1e40af;color:white;padding:10px 20px;border:none;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;">Get Free Draft →</button>
+    </form>
+    <p id="capture-success" style="display:none;color:#166534;font-weight:600;margin-top:8px;">✅ Got it! We'll send a severance agreement draft to your inbox within 1 hour.</p>
+    <p style="color:#94a3b8;font-size:0.8rem;margin-top:6px;">We check email daily · No spam · Unsubscribe anytime</p>
+  </div>
+</section>
+
+<script>
+function handleCapture(e) {
+  e.preventDefault();
+  var form = e.target;
+  var data = {email: form.email.value, practice: form.practice.value};
+  window.location.href = 'mailto:hello@docuflowlegal.com?subject=Free Draft Request&body=Email: ' + encodeURIComponent(data.email) + '%0APractice: ' + encodeURIComponent(data.practice || 'Not specified');
+  document.getElementById('capture-success').style.display = 'block';
+  form.reset();
+}
+</script>
+
 <!-- STATS -->
 <section class="stats">
   <div class="container">
