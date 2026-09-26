@@ -149,7 +149,7 @@
       <div style="margin-top:8px;font-size:0.75rem;color:#64748b;">AI-generated · Ready in seconds · Your firm branding</div>
     </div>
     <script>
-    var _b64d = "c2stcHJvai0ybGtGb0M5MEtLc184T0VzY2s5azdGRE5ZOW9qQmlzeEM3TUhLMmdqMXF3Q2dKZlMyQWxkNDZ3ZDNOSUdCOVJJbTFKTGYycmFQb1QzQmxia0ZKV01obDNSY0xTRkpMeEJPVjI3MVU1Q1VwWTk3SkZtM1NuWURwTy1URUFtM1pUajktOWstc3ZCZU02a0hYWnNtVkVWc09PNkRxMEE="; var DEMO_KEY = atob(_b64d);;
+    var DEMO_API = "https://employment-partnerships-reviewed-hired.trycloudflare.com/api/generate-document";
 
     function showSample(type) {
       var prompts = {
@@ -176,11 +176,10 @@
       el.style.display = 'block';
       el.innerHTML = '<div style="color:#86efac;font-weight:700;margin-bottom:8px;font-size:0.75rem;">⚡ Generating ' + cfg.label + '...</div><div style="color:#64748b;font-size:0.75rem;">Live AI · GPT-4o-mini · Texas law standards</div>';
 
-      fetch("https://api.openai.com/v1/chat/completions", {
+      fetch(DEMO_API, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + DEMO_KEY
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           model: 'gpt-4o-mini',
