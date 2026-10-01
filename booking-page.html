@@ -248,6 +248,71 @@
       line-height: 1.3;
     }
 
+    /* CTA directo Stripe */
+    .cta-stripe {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border: 1.5px solid #86efac;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .cta-stripe-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 4px;
+    }
+    .cta-stripe-sub {
+      font-size: 0.75rem;
+      color: #15803e;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .cta-stripe-buttons {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .cta-btn-pro {
+      background: #15803e;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cta-btn-pro:hover { background: #166534; }
+    .cta-btn-ent {
+      background: #1e40af;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cta-btn-ent:hover { background: #1e3a8a; }
+    .cta-stripe-note {
+      font-size: 0.68rem;
+      color: #64748b;
+      margin-top: 6px;
+    }
+    .cta-stripe-or {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      margin: 10px 0 6px;
+      text-align: center;
+    }
+
     /* Calendly section */
     .calendly-note {
       text-align: center;
@@ -293,7 +358,7 @@
 
     <span class="badge">🔥 Free 3-document pilot — no commitment</span>
     <h1>See DocuFlow draft YOUR firm's documents live</h1>
-    <p class="sub">We show your actual practice workflows, not generic templates. 30 minutes. We respond within 2 hours.</p>
+    <p class="sub">We show your actual practice workflows, not generic templates. 30 minutes. We respond within one business day.</p>
 
     <!-- Testimonial -->
     <div class="testimonial">
@@ -387,20 +452,32 @@
 
     <!-- Pricing callout -->
     <div class="pricing-callout">
-      <div class="pricing-callout-title">Pricing — no surprises</div>
+      <div class="pricing-callout-title">Pricing — no surprises, no annual lock-in</div>
       <div class="pricing-tiers">
         <div class="pricing-tier">
           <div class="tier-name">Professional</div>
           <div class="tier-price">$497<span style="font-size:0.7rem;font-weight:400;color:#64748b;">/mo</span></div>
-          <div class="tier-detail">$1,497 setup · 1–5 users</div>
+          <div class="tier-detail">$1,497 setup · 1–5 users · cancel anytime</div>
         </div>
         <div class="pricing-tier">
           <div class="tier-name">Enterprise</div>
           <div class="tier-price">$497<span style="font-size:0.7rem;font-weight:400;color:#64748b;">/mo</span></div>
-          <div class="tier-detail">$2,497 setup · 6–30 users</div>
+          <div class="tier-detail">$2,497 setup · 6–30 users · cancel anytime</div>
         </div>
       </div>
     </div>
+
+    <!-- CTA directo Stripe -->
+    <div class="cta-stripe">
+      <div class="cta-stripe-title">Ready to start? Go direct — no demo required.</div>
+      <div class="cta-stripe-sub">Professional: $497/mo + $1,497 setup · Enterprise: $497/mo + $2,497 setup<br>No annual contract · Cancel anytime · 3 documents free on pilot</div>
+      <div class="cta-stripe-buttons">
+        <a class="cta-btn-pro" href="https://buy.stripe.com/8x23coaQ253xa93fZ4abK00" target="_blank">Start Professional →</a>
+        <a class="cta-btn-ent" href="https://buy.stripe.com/eVqbIU3nAeE7epjbIOabK02" target="_blank">Start Enterprise →</a>
+      </div>
+      <div class="cta-stripe-note">3 free documents on pilot · Setup takes 1–2 weeks · Stripe secure checkout</div>
+    </div>
+    <div class="cta-stripe-or">— or schedule a demo below —</div>
 
     <form id="demo-form" name="demo-request" action="https://formspree.io/f/xpwzvqvj" method="POST" onsubmit="handleSubmit(event)">
       <input type="hidden" name="form-name" value="demo-request">
@@ -427,7 +504,7 @@
       <textarea name="pain" rows="2" placeholder="Biggest document pain point (optional)"></textarea>
       <button type="submit" id="submit-btn">Book My 30-Min Demo</button>
     </form>
-    <p class="note">We respond within 2 hours during business hours, CST.</p>
+    <p class="note">We respond within one business day during business hours, CST.</p>
 
     <!-- Trust signals -->
     <div class="trust-bar">
