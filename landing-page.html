@@ -23,7 +23,7 @@
     /* HERO */
     .hero { background: linear-gradient(135deg, #0f1629 0%, #1a2744 100%); color: white; padding: 80px 0; text-align: center; }
     .hero-badge { display: inline-block; background: rgba(59,130,246,0.2); border: 1px solid rgba(59,130,246,0.4); color: #93c5fd; padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 24px; }
-    .q4-badge { display: inline-block; background: rgba(234,179,8,0.2); border: 1px solid rgba(234,179,8,0.5); color: #fcd34d; padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 12px; letter-spacing: 0.05em; }
+    .pilot-badge { display: inline-block; background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.5); color: #86efac; padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-bottom: 16px; letter-spacing: 0.04em; }
     .hero h1 { font-size: 2.6rem; font-weight: 700; margin-bottom: 16px; line-height: 1.2; }
     .hero h1 span { color: #60a5fa; }
     .hero .sub { font-size: 1.15rem; color: #94a3b8; margin-bottom: 32px; max-width: 580px; margin-left: auto; margin-right: auto; }
@@ -31,6 +31,7 @@
     .hero-cta:hover { background: #2563eb; transform: translateY(-1px); }
     .hero small { display: block; margin-top: 12px; color: #64748b; font-size: 0.85rem; }
     .hero-note { margin-top: 20px; font-size: 0.85rem; color: #475569; }
+    .pilot-callout { margin-top: 16px; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; padding: 10px 20px; display: inline-block; font-size: 0.9rem; color: #86efac; font-weight: 500; }
 
     /* STATS BAR */
     .stats { background: #1e3a5f; padding: 32px 0; }
@@ -161,39 +162,28 @@
 <!-- HERO -->
 <section class="hero">
   <div class="container">
-    <div class="hero-badge">For Texas Law Firms · 2–30 Attorneys</div>
-    <div class="q4-badge">For Texas Employment &amp; Immigration Attorneys</div>
+    <div class="pilot-badge">🎯 FREE 3-DOCUMENT PILOT · NO CREDIT CARD</div>
+    <div class="hero-badge">For Texas Employment &amp; Immigration Firms · 2–30 Attorneys</div>
     <h1>Associates at Texas Employment Firms Spend 8–15 Hours Per Matter on First Drafts.<br><span style="font-size:1.3rem;font-weight:400;color:#94a3b8;">We generate those drafts in 30 seconds.</span></h1>
-    <p class="sub">EEOC position statements, severance agreements, non-competes, H-1B petitions — trained on your firm's own templates. Complete first drafts, not templates. Works alongside your existing tools (Clio, AltaClaro, etc.) — we're a specialized document generation layer, not another platform to manage. If the output doesn't meet your bar, you don't pay setup.</p>
-    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:center;margin-bottom:16px;">
+    <p class="sub">EEOC position statements, severance agreements, non-competes, H-1B petitions — trained on <strong style="color:#86efac;">your firm's own templates</strong>. Complete first drafts, not templates. Works alongside your existing tools (Clio, AltaClaro, etc.) — we're a specialized document generation layer, not another platform to manage. If the output doesn't meet your bar, you don't pay setup.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
       <a href="https://gerardounna.github.io/docuflowlegal/booking-page.html" class="hero-cta" style="background:#22c55e;">📅 Book a 30-Min Demo →</a>
-      <a href="https://gerardounna.github.io/docuflowlegal/docuflow-product/demo-interface.html" target="_blank" class="hero-cta" style="background:transparent;border:2px solid rgba(255,255,255,0.4);padding:14px 32px;">⚡ Try Live Demo First</a>
+      <a href="https://gerardounna.github.io/docuflowlegal/booking-page.html" class="hero-cta" style="background:transparent;border:2px solid rgba(34,197,94,0.6);color:#86efac;padding:14px 32px;">🎯 Claim Your Free 3-Document Pilot →</a>
     </div>
     <p class="hero-note">$1,497 setup · $497/mo flat · Month-to-month · <strong>If output doesn't meet your bar, no setup fee</strong></p>
-    <p class="hero-note"><strong>Free pilot:</strong> We draft 3 real documents from your practice area — you judge the quality. We launch only when you're satisfied.</p>
+    <p class="pilot-callout">We draft 3 real documents from your practice area — you judge the quality. We launch only when you're satisfied.</p>
   </div>
 </section>
 
 <!-- EMAIL CAPTURE — Top of page -->
 <section style="background:#f0f9ff;border-bottom:1px solid #e0f2fe;padding:20px 0;">
   <div class="container" style="text-align:center;">
-    <p style="color:#334155;font-size:0.95rem;margin-bottom:10px;">Not ready to book? <strong>Send us your most common document type</strong> — we'll draft 3 examples using your practice area format. You'll hear back within one business day.</p>
-    <form id="hero-capture" action="https://formspree.io/f/xpwzvqvj" method="POST" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:500px;margin:0 auto;">
-      <input type="email" name="email" placeholder="Your firm email" required style="flex:1;min-width:200px;padding:10px 14px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;">
-      <select name="practice" style="padding:10px 14px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;color:#475569;">
-        <option value="">Practice area</option>
-        <option>Immigration Petitions (H-1B, L-1, Green Card)</option>
-        <option>Employment / Severance Agreements</option>
-        <option>Corporate / M&A</option>
-        <option>Real Estate</option>
-        <option>Family Law</option>
-        <option>Litigation / Discovery Requests</option>
-        <option>Other</option>
-      </select>
-      <button type="submit" style="background:#1e40af;color:white;padding:10px 20px;border:none;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;">Get Free Draft →</button>
-    </form>
-    <p id="capture-success" style="display:none;color:#166534;font-weight:600;margin-top:8px;">✅ Got it! We'll draft 3 examples from your practice area and reply within 2 hours.</p>
-    <p style="color:#94a3b8;font-size:0.8rem;margin-top:6px;">No spam · Unsubscribe anytime</p>
+    <p style="color:#334155;font-size:0.95rem;margin-bottom:10px;">Not ready to book? <strong>Email us your most common document type</strong> — we'll draft 3 examples using your practice area format. Replies within 2 hours.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center;max-width:500px;margin:0 auto;">
+      <a href="mailto:hello@docuflowlegal.com?subject=Free%20Document%20Draft%20Request&body=Practice%20area%3A%0A%0ADocument%20type(s)%3A%0A%0AFirm%20name%3A" style="background:#1e40af;color:white;padding:12px 24px;border-radius:6px;font-size:0.9rem;font-weight:600;text-decoration:none;">✉️ Email Us Your Document Request →</a>
+      <a href="https://gerardounna.github.io/docuflowlegal/booking-page.html" style="background:#fff;color:#1e40af;padding:12px 24px;border-radius:6px;font-size:0.9rem;font-weight:600;text-decoration:none;border:1px solid #cbd5e1;">📅 Or Book a Demo</a>
+    </div>
+    <p style="color:#94a3b8;font-size:0.8rem;margin-top:10px;">No spam · Replies within 2 business hours</p>
   </div>
 </section>
 
