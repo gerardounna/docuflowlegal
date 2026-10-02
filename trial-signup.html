@@ -21,16 +21,17 @@
     .btn { width: 100%; background: #16a34a; color: white; border: none; border-radius: 8px; padding: 16px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; }
     .btn:hover { background: #15803d; transform: translateY(-1px); }
     .btn:active { transform: translateY(0); }
+    .btn:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
     .guarantee { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 14px; }
     .features { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
     .feature { display: flex; align-items: flex-start; gap: 8px; }
     .feature-icon { width: 18px; height: 18px; background: #16a34a; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
     .feature-icon span { color: white; font-size: 11px; font-weight: 700; }
-    .feature p { font-size: 0.85rem; color: #cbd5e1; line-height: 1.4; }
-    .success { display: none; text-align: center; padding: 40px 20px; }
+    .success { display: none; text-align: center; }
     .success h2 { color: #f8fafc; font-size: 1.5rem; margin-bottom: 12px; }
     .success p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; }
-    .success .email-note { background: #0f172a; border-radius: 8px; padding: 14px; margin-top: 20px; font-size: 0.9rem; color: #94a3b8; }
+    .success-note { background: #0f172a; border-radius: 8px; padding: 14px; margin-top: 20px; font-size: 0.9rem; color: #94a3b8; }
+    .error-msg { background: #7f1d1d; color: #fca5a5; padding: 10px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 0.85rem; display: none; }
     @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -40,97 +41,122 @@
     <h1>Automate Your Employment Documents</h1>
     <p class="sub">Severance agreements, EEOC responses, non-competes — drafted in minutes, not hours. No credit card required.</p>
 
-    <div id="form-section">
-      <div class="card">
-        <div class="features">
-          <div class="feature"><div class="feature-icon"><span>✓</span></div><p>We train AI on your firm's own templates</p></div>
-          <div class="feature"><div class="feature-icon"><span>✓</span></div><p>Free 3-document pilot before anything else</p></div>
-          <div class="feature"><div class="feature-icon"><span>✓</span></div><p>Attorney reviews every output before sending</p></div>
-          <div class="feature"><div class="feature-icon"><span>✓</span></div><p>Up and running same day</p></div>
+    <div id="form-section" class="card">
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon"><span>✓</span></div>
+          <p>We train AI on your firm's own templates</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><span>✓</span></div>
+          <p>Free 3-document pilot before anything else</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><span>✓</span></div>
+          <p>Attorney reviews every output before sending</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><span>✓</span></div>
+          <p>Up and running same day</p>
+        </div>
+      </div>
+
+      <div id="error-msg" class="error-msg"></div>
+
+      <form action="https://formspree.io/f/xpwzvqvj" method="POST" id="trial-form">
+        <div class="row">
+          <div class="field">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Sarah" required>
+          </div>
+          <div class="field">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Martinez" required>
+          </div>
         </div>
 
-        <!-- Replace YOUR_GOOGLE_FORM_ID with the ID from your Google Form embed -->
-        <form id="trial-form" action="https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/formResponse" method="POST" target="hidden_iframe" onsubmit="onSubmit()">
-          <input type="hidden" name="entry.FIRST_NAME_ID" id="first_name" value="">
-          <input type="hidden" name="entry.LAST_NAME_ID" id="last_name" value="">
-          <input type="hidden" name="entry.FIRM_ID" id="firm" value="">
-          <input type="hidden" name="entry.EMAIL_ID" id="email" value="">
-          <input type="hidden" name="entry.PHONE_ID" id="phone" value="">
-          <input type="hidden" name="entry.PRACTICE_ID" id="practice" value="">
+        <div class="field">
+          <label for="company">Firm Name</label>
+          <input type="text" id="company" name="company" placeholder="Martinez Employment Law" required>
+        </div>
 
-          <div class="row">
-            <div class="field">
-              <label>First Name</label>
-              <input type="text" id="fn_input" placeholder="Joseph" oninput="document.getElementById('first_name').value=this.value" required>
-            </div>
-            <div class="field">
-              <label>Last Name</label>
-              <input type="text" id="ln_input" placeholder="Gagnon" oninput="document.getElementById('last_name').value=this.value" required>
-            </div>
-          </div>
-          <div class="field">
-            <label>Firm Name</label>
-            <input type="text" id="firm_input" placeholder="Fisher Phillips LLP" oninput="document.getElementById('firm').value=this.value" required>
-          </div>
-          <div class="field">
-            <label>Work Email</label>
-            <input type="email" id="email_input" placeholder="jgagnon@fisherphillips.com" oninput="document.getElementById('email').value=this.value" required>
-          </div>
-          <div class="field">
-            <label>Phone <span style="font-weight:400;text-transform:none;font-size:0.75rem;">(optional)</span></label>
-            <input type="tel" id="phone_input" placeholder="713.292.5613" oninput="document.getElementById('phone').value=this.value">
-          </div>
-          <div class="field">
-            <label>Primary Practice Area</label>
-            <select id="practice_input" onchange="document.getElementById('practice').value=this.value" required>
-              <option value="">Select one...</option>
-              <option>Employment Discrimination &amp; Litigation</option>
-              <option>Employment Agreements &amp; Non-Competes</option>
-              <option>Labor Relations &amp; Union</option>
-              <option>EEOC / Agency Responses</option>
-              <option>Immigration Law</option>
-              <option>Corporate / Commercial Contracts</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <button type="submit" class="btn">Start My Free Trial →</button>
-          <p class="guarantee">No credit card. No commitment. Set up is free.</p>
-        </form>
+        <div class="field">
+          <label for="email">Work Email</label>
+          <input type="email" id="email" name="email" placeholder="sarah@martinezlaw.com" required>
+        </div>
 
-        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="checkSubmit()"></iframe>
-      </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="(512) 555-0100">
+        </div>
+
+        <div class="field">
+          <label for="practiceArea">Primary Practice Area</label>
+          <select id="practiceArea" name="practiceArea" required>
+            <option value="" disabled selected>Select one...</option>
+            <option value="employment-discrimination-litigation">Employment Discrimination &amp; Litigation</option>
+            <option value="employment-agreements-non-competes">Employment Agreements &amp; Non-Competes</option>
+            <option value="labor-relations-union">Labor Relations &amp; Union</option>
+            <option value="eeoc-agency-responses">EEOC / Agency Responses</option>
+            <option value="immigration-law">Immigration Law</option>
+            <option value="corporate-commercial-contracts">Corporate / Commercial Contracts</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn">Start My Free Trial →</button>
+        <p class="guarantee">No credit card. No commitment. Set up is free.</p>
+      </form>
     </div>
 
-    <div class="success" id="success-section">
-      <div class="card">
-        <div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
-        <h2>You're In.</h2>
-        <p>We'll set up your firm profile and send you a login within 1 business day. Then you test the output with your own templates — before you commit to anything.</p>
-        <div class="email-note">Questions? Email us at <strong>hello@docuflowlegal.com</strong></div>
+    <div id="success-section" class="card success">
+      <h2>🎉 You're In.</h2>
+      <p>We'll set up your firm profile and send you a login within 1 business day. Then you test the output with your own templates — before you commit to anything.</p>
+      <div class="success-note">
+        Questions? Email us at <a href="mailto:hello@docuflowlegal.com" style="color:#6366f1;">hello@docuflowlegal.com</a>
       </div>
     </div>
-    <p id="debug" style="display:none;color:#f87171;font-size:0.75rem;margin-top:8px;text-align:center;"></p>
   </div>
 
   <script>
-    function onSubmit() {
-      // Fields already synced via oninput/onchange
+    var form = document.getElementById("trial-form");
+
+    async function handleSubmit(event) {
+      event.preventDefault();
+      var btn = form.querySelector('.btn');
+      var errorMsg = document.getElementById('error-msg');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      errorMsg.style.display = 'none';
+
+      var data = Object.fromEntries(new FormData(form).entries());
+
+      try {
+        var resp = await fetch(form.action, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (resp.ok) {
+          document.getElementById('form-section').style.display = 'none';
+          document.getElementById('success-section').style.display = 'block';
+        } else {
+          var errData = await resp.json().catch(function() { return {}; });
+          errorMsg.textContent = (errData && errData.error) ? errData.error : 'Something went wrong. Please try again or email us at hello@docuflowlegal.com.';
+          errorMsg.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Start My Free Trial →';
+        }
+      } catch(ex) {
+        errorMsg.textContent = 'Network error. Please try again or email us at hello@docuflowlegal.com.';
+        errorMsg.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Start My Free Trial →';
+      }
     }
-    function checkSubmit() {
-      var formSection = document.getElementById('form-section');
-      if (formSection.style.display !== 'none') return;
-      var success = document.getElementById('success-section');
-      success.style.display = 'block';
-      document.getElementById('debug').style.display = 'none';
-    }
-    // Fallback if iframe doesn't fire
-    setTimeout(function() {
-      var formSection = document.getElementById('form-section');
-      if (formSection.style.display !== 'none') return;
-      var success = document.getElementById('success-section');
-      success.style.display = 'block';
-      document.getElementById('debug').style.display = 'none';
-    }, 2000);
+
+    form.addEventListener("submit", handleSubmit);
   </script>
 </body>
 </html>
