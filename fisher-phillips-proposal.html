@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocuFlow Legal for Fisher Phillips — Employment Document Automation</title>
+  <meta name="description" content="AI severance agreements, non-competes, and EEOC responses — trained on your firm's templates. Fisher Phillips is already deploying AI. Now cover the employment documents side.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a2e; line-height: 1.6; }
+    .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+    /* HEADER */
+    .header { background: linear-gradient(135deg, #0f3460 0%, #16213e 100%); color: white; padding: 48px 40px; border-radius: 12px 12px 0 0; margin-top: 40px; }
+    .badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #a8d8ea; padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px; }
+    .header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 12px; line-height: 1.25; }
+    .header h1 span { color: #4fc3f7; }
+    .header .sub { font-size: 1.05rem; color: #cce4f0; max-width: 560px; margin-bottom: 20px; }
+    .header .deposim-callout { background: rgba(79,195,247,0.15); border: 1px solid rgba(79,195,247,0.4); border-radius: 8px; padding: 16px 20px; font-size: 0.9rem; color: #a8d8ea; margin-top: 8px; }
+    .header .deposim-callout strong { color: #4fc3f7; }
+
+    .content { background: white; padding: 40px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border-radius: 0 0 12px 12px; }
+
+    h2 { font-size: 1.35rem; color: #1a1a2e; margin: 32px 0 16px; border-left: 4px solid #0f3460; padding-left: 14px; font-weight: 700; }
+    h2:first-child { margin-top: 0; }
+    h3 { font-size: 1.05rem; color: #0f3460; margin: 20px 0 10px; font-weight: 600; }
+    p { margin: 14px 0; color: #374151; font-size: 0.98rem; line-height: 1.7; }
+    ul { margin: 12px 0 12px 24px; }
+    li { margin: 8px 0; color: #374151; font-size: 0.98rem; }
+
+    /* INTRO CARD */
+    .intro-card { background: #f0f7ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 24px; margin: 20px 0; }
+    .intro-card p { margin: 0; color: #1e40af; font-size: 0.95rem; }
+    .intro-card strong { color: #1d4ed8; }
+
+    /* HIGHLIGHT */
+    .highlight { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 20px 24px; margin: 24px 0; }
+    .highlight .big { font-size: 2rem; font-weight: 800; color: #92400e; }
+    .highlight .label { color: #b45309; font-size: 0.9rem; margin-top: 4px; }
+    .highlight p { color: #92400e; margin: 8px 0 0; }
+
+    /* SAMPLE DOCUMENT */
+    .sample-section { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 24px; margin: 24px 0; }
+    .sample-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .sample-tag { background: #dbeafe; color: #1d4ed8; padding: 4px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; }
+    .doc-preview { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; font-size: 0.85rem; color: #475569; line-height: 1.6; }
+    .doc-preview .doc-title { font-size: 1rem; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+    .doc-preview .doc-meta { color: #64748b; font-size: 0.8rem; margin-bottom: 14px; }
+    .doc-preview .doc-body { color: #334155; }
+    .doc-preview .ai-badge { display: inline-block; background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+
+    /* MATH TABLE */
+    .math-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.92rem; }
+    .math-table th { background: #0f3460; color: white; padding: 12px 16px; text-align: left; font-size: 0.85rem; }
+    .math-table td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; }
+    .math-table tr:nth-child(even) td { background: #f8fafc; }
+    .math-table .df-row td { background: #ecfdf5 !important; color: #065f46; font-weight: 600; }
+
+    /* PRICING */
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .pricing-card { border: 2px solid #e2e8f0; border-radius: 10px; padding: 24px; text-align: center; }
+    .pricing-card.pro { border-color: #0f3460; background: #f0f7ff; }
+    .pricing-card .name { font-size: 0.85rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .pricing-card .price { font-size: 2.2rem; font-weight: 800; color: #1a1a2e; }
+    .pricing-card .period { font-size: 0.85rem; color: #64748b; margin-bottom: 12px; }
+    .pricing-card .setup { font-size: 0.82rem; color: #64748b; margin-top: 8px; }
+    .pricing-card ul { text-align: left; margin: 12px 0 0; }
+    .pricing-card li { font-size: 0.85rem; margin: 6px 0; }
+    .pricing-card .best { background: #0f3460; color: white; padding: 3px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; display: inline-block; margin-bottom: 8px; }
+
+    /* PILOT CTA */
+    .pilot { background: linear-gradient(135deg, #0f3460 0%, #1a237e 100%); color: white; border-radius: 12px; padding: 32px; margin: 32px 0; text-align: center; }
+    .pilot h3 { color: #a8d8ea; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; border: none; padding: 0; margin: 0 0 8px; }
+    .pilot .big { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+    .pilot p { color: rgba(255,255,255,0.85); font-size: 0.95rem; margin: 0 0 20px; }
+    .pilot-steps { display: flex; gap: 24px; justify-content: center; margin: 20px 0; text-align: left; }
+    .pilot-step { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 14px 18px; flex: 1; max-width: 200px; }
+    .pilot-step .num { background: #4fc3f7; color: #0f3460; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; margin-bottom: 8px; }
+    .pilot-step .text { font-size: 0.85rem; color: rgba(255,255,255,0.9); }
+
+    /* DEPOSIM COMPARISON */
+    .comparison { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 24px; margin: 24px 0; }
+    .comparison h3 { color: #0f3460; border-bottom: 2px solid #0f3460; padding-bottom: 8px; margin-bottom: 16px; }
+    .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .comparison-item { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; }
+    .comparison-item .tool { font-weight: 700; color: #1a1a2e; font-size: 0.9rem; margin-bottom: 4px; }
+    .comparison-item .type { color: #64748b; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .comparison-item .desc { font-size: 0.85rem; color: #475569; }
+    .comparison-item.docuflow { border-color: #0f3460; background: #f0f7ff; }
+
+    /* CTA BUTTONS */
+    .cta { text-align: center; margin: 32px 0; }
+    .cta a { display: inline-block; background: #0f3460; color: white; text-decoration: none; padding: 15px 36px; border-radius: 8px; font-size: 1rem; font-weight: 700; margin: 8px; transition: background 0.2s, transform 0.1s; }
+    .cta a:hover { background: #1a237e; transform: translateY(-1px); }
+    .cta a.secondary { background: white; color: #0f3460; border: 2px solid #0f3460; }
+    .cta a.secondary:hover { background: #f0f7ff; }
+    .cta small { display: block; margin-top: 10px; color: #64748b; font-size: 0.82rem; }
+
+    .disclaimer { font-size: 0.78rem; color: #94a3b8; text-align: center; margin-top: 28px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+    .disclaimer a { color: #64748b; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pilot-steps { flex-direction: column; align-items: center; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .header { padding: 32px 24px; }
+      .content { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="badge">Fisher Phillips · Houston</div>
+  <h1>Employment Documents.<br><span>Automated in Minutes.</span></h1>
+  <p class="sub">AI that drafts severance agreements, non-competes, and EEOC responses — trained on your firm's own templates. No per-user fees. No long-term contract.</p>
+
+  <div class="deposim-callout">
+    <strong>FYI — Fisher Phillips announced a firmwide deployment of AltaClaro DepoSim</strong> on September 23, 2026. Your firm is already investing in AI.
+    DocuFlow covers the employment documents side — severance, EEOC, non-competes — so your associates focus on strategy, not first drafts.
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- INTRO -->
+  <div class="intro-card">
+    <p><strong>Quick read for Fisher Phillips attorneys:</strong> We automate employment law documents (severance agreements, non-competes, EEOC responses) using GPT-4o, trained on your firm's own templates. You review and finalize. <strong>$497/month flat</strong> for the entire firm — not per attorney.</p>
+  </div>
+
+  <!-- WHY NOW -->
+  <h2>You Already Invested in AI. Now Cover the Employment Documents.</h2>
+  <p>When Fisher Phillips deployed AltaClaro DepoSim firmwide in September, it sent a clear signal: your firm isn't waiting for AI to prove itself — you're deploying it at scale.</p>
+  <p>DepoSim covers deposition training. DocuFlow covers employment documents — the first drafts your associates write on every new severance, non-compete, or EEOC matter.</p>
+  <p>The math is straightforward:</p>
+  <ul>
+    <li>Associate billing at $350–$500/hr: severance agreement = 3–6 hrs of associate time</li>
+    <li>DocuFlow generates the first draft in <strong>under 20 minutes</strong></li>
+    <li>Associate reviews, edits, finalizes: 30–45 minutes total vs. 3–6 hours</li>
+    <li>Time saved per matter: <strong>15–30 attorney hours</strong></li>
+  </ul>
+
+  <!-- WHAT WE GENERATE -->
+  <h2>What We Generate for Employment Law Firms</h2>
+  <p>DocuFlow is trained on your firm's existing templates and document style. You upload 3–5 examples, we learn your format, your language, your clauses. Every document that comes out sounds like <em>your firm</em>, not generic AI output.</p>
+
+  <div class="sample-section">
+    <div class="sample-header">
+      <h3 style="margin:0; border:none; padding:0; font-size:1rem;">Sample Output — Severance Agreement (EEOC-Compliant)</h3>
+      <span class="sample-tag">Generated in 18 minutes</span>
+    </div>
+    <div class="doc-preview">
+      <div class="doc-title">Severance Agreement & General Release <span class="ai-badge">AI DRAFT</span></div>
+      <div class="doc-meta">Matter: [Employee Name] · Practice Area: Employment · Jurisdiction: Texas</div>
+      <div class="doc-body">
+        <p style="margin:0;font-size:0.85rem;"><strong>PARTIES:</strong> [Employer Name] ("Employer") and [Employee Name] ("Employee")...<br><br>
+        <strong>1. SEVERANCE PAYMENT.</strong> In consideration of the releases and covenants herein... Employer shall pay Employee a gross severance amount of $[____________], less applicable withholdings...<br><br>
+        <strong>2. GENERAL RELEASE.</strong> Employee hereby releases and forever discharges Employer... all claims arising under Title VII of the Civil Rights Act... ADEA... FMLA... WARN Act...<br><br>
+        <strong>3. NON-DISPARAGEMENT.</strong> Employee agrees not to make any false, disparaging, or defamatory statements regarding Employer...<br><br>
+        <em style="color:#64748b;font-size:0.8rem;">[Document continues with additional sections, OWBPA notice, signature blocks — all formatted per firm's existing template]</em>
+      </div>
+    </div>
+  </div>
+
+  <p>Documents we automate: <strong>Severance Agreements, Non-Compete Agreements, EEOC Response Letters, Employment Contracts, Separation Agreements, Litigation Holds, Discovery Requests</strong>.</p>
+
+  <!-- ROI MATH -->
+  <h2>The Math: DocuFlow vs. Doing It Manually</h2>
+
+  <table class="math-table">
+    <tr>
+      <th>Cost Driver</th>
+      <th>Manual (Associate)</th>
+      <th>DocuFlow</th>
+    </tr>
+    <tr>
+      <td>Time per severance agreement</td>
+      <td>3–6 hours</td>
+      <td>18–30 min total</td>
+    </tr>
+    <tr>
+      <td>Attorney billing rate</td>
+      <td>$350–$500/hr</td>
+      <td>Included</td>
+    </tr>
+    <tr>
+      <td>Cost per document</td>
+      <td>$1,050–$3,000</td>
+      <td>$0 extra</td>
+    </tr>
+    <tr>
+      <td>10 severance agreements/month</td>
+      <td>$10,500–$30,000</td>
+      <td>Included in flat fee</td>
+    </tr>
+    <tr>
+      <td>Monthly investment</td>
+      <td>Variable</td>
+      <td class="df-row" style="background:#ecfdf5 !important;color:#065f46;font-weight:700;">$497/month flat</td>
+    </tr>
+  </table>
+
+  <div class="highlight">
+    <div class="big">15–30 hrs/week</div>
+    <div class="label">saved per associate, based on pilot results (employment law firms)</div>
+    <p>At $400/hr, that's $6,000–$12,000 in recovered attorney time per associate, per month.</p>
+  </div>
+
+  <!-- COMPARISON: DEPOSIM VS DOCUFLOW -->
+  <h2>DocuFlow Complements Your AltaClaro DepoSim Investment</h2>
+
+  <div class="comparison">
+    <h3>What Each Tool Covers</h3>
+    <div class="comparison-grid">
+      <div class="comparison-item docuflow">
+        <div class="tool">DocuFlow Legal</div>
+        <div class="type">Employment Documents</div>
+        <div class="desc">Severance agreements, non-competes, EEOC responses, employment contracts. Trained on firm's own templates.</div>
+      </div>
+      <div class="comparison-item">
+        <div class="tool">AltaClaro DepoSim</div>
+        <div class="type">Deposition Training</div>
+        <div class="desc">AI-powered deposition preparation and training simulations for litigation readiness.</div>
+      </div>
+    </div>
+    <p style="margin:16px 0 0;font-size:0.9rem;color:#64748b;">Both are AI tools your firm invested in. They serve different stages of practice. DepoSim trains your attorneys; DocuFlow handles the documents they write.</p>
+  </div>
+
+  <!-- COMPETITIVE PRICING -->
+  <h2>Pricing: Flat $497/Month — Not Per Attorney</h2>
+
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="name">Clio</div>
+      <div class="price">$118+</div>
+      <div class="period">per attorney / month</div>
+      <div class="setup">Draft Add-on: +$49/attorney/month</div>
+      <ul>
+        <li>5 attorneys = $835/month base</li>
+        <li>Draft add-on: +$245/month</li>
+        <li><strong>Total: $1,080/month</strong></li>
+      </ul>
+    </div>
+    <div class="pricing-card pro">
+      <span class="best">DOCUFLOW</span>
+      <div class="name">Professional</div>
+      <div class="price">$497</div>
+      <div class="period">flat / month</div>
+      <div class="setup">$1,497 setup</div>
+      <ul>
+        <li>Unlimited attorneys</li>
+        <li>Unlimited documents</li>
+        <li>Trained on firm's templates</li>
+        <li>GPT-4o-powered generation</li>
+        <li>EEOC-compliant outputs</li>
+        <li><strong>Total: $497/month</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="font-size:0.92rem;color:#64748b;text-align:center;margin-top:-8px;">Clio Core $69 + Draft add-on $49 per attorney — 5 attorneys = $1,080/month. DocuFlow: $497 flat for the entire firm.</p>
+
+  <!-- HOW IT WORKS -->
+  <h2>How It Works — 3 Steps</h2>
+  <ol style="margin:12px 0 12px 24px;">
+    <li><strong>Upload 3–5 documents</strong> from your existing template library (severance agreements, non-competes, EEOC responses)</li>
+    <li><strong>We train DocuFlow on your firm's format and language</strong> — your templates, your clauses, your style</li>
+    <li><strong>Generate first drafts in minutes.</strong> Associate reviews, edits, finalizes. Time per matter drops from 3–6 hours to 30–45 minutes.</li>
+  </ol>
+
+  <!-- FREE PILOT CTA -->
+  <div class="pilot">
+    <h3>Free 3-Document Pilot</h3>
+    <div class="big">No credit card. No commitment.</div>
+    <p>We generate 3 severance agreements or employment documents using your firm's own templates. You review the output. If it doesn't save your associates meaningful time, you walk away with zero cost.</p>
+    <div class="pilot-steps">
+      <div class="pilot-step">
+        <div class="num">1</div>
+        <div class="text">Send us 3 sample documents from your template library</div>
+      </div>
+      <div class="pilot-step">
+        <div class="num">2</div>
+        <div class="text">We train DocuFlow on your firm's format (24 hrs)</div>
+      </div>
+      <div class="pilot-step">
+        <div class="num">3</div>
+        <div class="text">You get 3 AI-generated documents. Review, decide.</div>
+      </div>
+    </div>
+    <a href="https://calendly.com/docuflow/30min" style="display:inline-block;background:#4fc3f7;color:#0f3460;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:700;font-size:1rem;margin-top:4px;">Book a 30-Min Demo →</a>
+  </div>
+
+  <!-- FAQ -->
+  <h2>Common Questions</h2>
+  <h3>Is DocuFlow secure? We handle confidential client data.</h3>
+  <p>Yes. All documents are processed via OpenAI's GPT-4o under a business associate agreement (BAA) framework. Your client data is never used to train models. We are Texas Bar compliant and follow ABA cybersecurity guidelines.</p>
+
+  <h3>What if the output needs significant editing?</h3>
+  <p>Then we iterate. DocuFlow learns from your feedback — every correction makes the next draft more accurate. Most firms report that after 3–5 documents, the output requires only light review, not rewrite.</p>
+
+  <h3>What practice areas does DocuFlow cover?</h3>
+  <p>Currently optimized for <strong>employment law</strong> (severance agreements, non-competes, EEOC responses, employment contracts, WARN Act notices) and <strong>immigration law</strong> (visa petitions, PERM labor certifications, I-9 compliance, H-1B employer petitions). Expansion to other areas in development.</p>
+
+  <h3>Who handles implementation and training?</h3>
+  <p>We do. Setup takes 1–2 weeks. We help you select and format the initial template set, run the training, and provide a live demo with your actual documents. No IT department required.</p>
+
+  <!-- LIVE DEMO -->
+  <h2>See It Live — Generate a Severance Agreement in Real Time</h2>
+  <p>Our demo interface generates severance agreements on the fly using GPT-4o. No login required. Click below, enter a few fields, and see what the output looks like before you decide anything.</p>
+  <div class="cta">
+    <a href="https://gerardounna.github.io/docuflowlegal/docuflow-product/demo-interface.html" target="_blank">Try Live Demo →</a>
+    <a href="https://calendly.com/docuflow/30min" class="secondary">Book a 30-Min Call</a>
+    <small>Or email us at <a href="mailto:hello@docuflowlegal.com" style="color:#0f3460;">hello@docuflowlegal.com</a></small>
+  </div>
+
+  <div class="disclaimer">
+    DocuFlow Legal generates employment document drafts using GPT-4o. Output requires attorney review and editing before use. Pricing verified October 2026: Clio Core $69/attorney/month + Draft Add-on $49/attorney/month (5-attorney firm = $1,080/month). DocuFlow: $497 flat/month. Pilot results reflect employment law firms' reported outcomes — individual results may vary.
+  </div>
+
+</div>
+</div>
+</body>
+</html>
