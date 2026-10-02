@@ -21,7 +21,6 @@
     .btn { width: 100%; background: #16a34a; color: white; border: none; border-radius: 8px; padding: 16px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; }
     .btn:hover { background: #15803d; transform: translateY(-1px); }
     .btn:active { transform: translateY(0); }
-    .btn:disabled { background: #334155; color: #64748b; cursor: not-allowed; transform: none; }
     .guarantee { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 14px; }
     .features { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
     .feature { display: flex; align-items: flex-start; gap: 8px; }
@@ -44,63 +43,61 @@
     <div id="form-section">
       <div class="card">
         <div class="features">
-          <div class="feature">
-            <div class="feature-icon"><span>✓</span></div>
-            <p>We train AI on your firm's own templates</p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon"><span>✓</span></div>
-            <p>Free 3-document pilot before anything else</p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon"><span>✓</span></div>
-            <p>Attorney reviews every output before sending</p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon"><span>✓</span></div>
-            <p>Up and running same day</p>
-          </div>
+          <div class="feature"><div class="feature-icon"><span>✓</span></div><p>We train AI on your firm's own templates</p></div>
+          <div class="feature"><div class="feature-icon"><span>✓</span></div><p>Free 3-document pilot before anything else</p></div>
+          <div class="feature"><div class="feature-icon"><span>✓</span></div><p>Attorney reviews every output before sending</p></div>
+          <div class="feature"><div class="feature-icon"><span>✓</span></div><p>Up and running same day</p></div>
         </div>
 
-        <form id="trial-form" onsubmit="submitTrial(event)">
+        <!-- Replace YOUR_GOOGLE_FORM_ID with the ID from your Google Form embed -->
+        <form id="trial-form" action="https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/formResponse" method="POST" target="hidden_iframe" onsubmit="onSubmit()">
+          <input type="hidden" name="entry.FIRST_NAME_ID" id="first_name" value="">
+          <input type="hidden" name="entry.LAST_NAME_ID" id="last_name" value="">
+          <input type="hidden" name="entry.FIRM_ID" id="firm" value="">
+          <input type="hidden" name="entry.EMAIL_ID" id="email" value="">
+          <input type="hidden" name="entry.PHONE_ID" id="phone" value="">
+          <input type="hidden" name="entry.PRACTICE_ID" id="practice" value="">
+
           <div class="row">
             <div class="field">
               <label>First Name</label>
-              <input type="text" id="first_name" placeholder="Joseph" required>
+              <input type="text" id="fn_input" placeholder="Joseph" oninput="document.getElementById('first_name').value=this.value" required>
             </div>
             <div class="field">
               <label>Last Name</label>
-              <input type="text" id="last_name" placeholder="Gagnon" required>
+              <input type="text" id="ln_input" placeholder="Gagnon" oninput="document.getElementById('last_name').value=this.value" required>
             </div>
           </div>
           <div class="field">
             <label>Firm Name</label>
-            <input type="text" id="firm" placeholder="Fisher Phillips LLP" required>
+            <input type="text" id="firm_input" placeholder="Fisher Phillips LLP" oninput="document.getElementById('firm').value=this.value" required>
           </div>
           <div class="field">
             <label>Work Email</label>
-            <input type="email" id="email" placeholder="jgagnon@fisherphillips.com" required>
+            <input type="email" id="email_input" placeholder="jgagnon@fisherphillips.com" oninput="document.getElementById('email').value=this.value" required>
           </div>
           <div class="field">
-            <label>Phone</label>
-            <input type="tel" id="phone" placeholder="713.292.5613">
+            <label>Phone <span style="font-weight:400;text-transform:none;font-size:0.75rem;">(optional)</span></label>
+            <input type="tel" id="phone_input" placeholder="713.292.5613" oninput="document.getElementById('phone').value=this.value">
           </div>
           <div class="field">
             <label>Primary Practice Area</label>
-            <select id="practice" required>
+            <select id="practice_input" onchange="document.getElementById('practice').value=this.value" required>
               <option value="">Select one...</option>
-              <option>Employment Discrimination & Litigation</option>
-              <option>Employment Agreements & Non-Competes</option>
-              <option>Labor Relations & Union</option>
+              <option>Employment Discrimination &amp; Litigation</option>
+              <option>Employment Agreements &amp; Non-Competes</option>
+              <option>Labor Relations &amp; Union</option>
               <option>EEOC / Agency Responses</option>
               <option>Immigration Law</option>
               <option>Corporate / Commercial Contracts</option>
               <option>Other</option>
             </select>
           </div>
-          <button type="submit" class="btn" id="submit-btn">Start My Free Trial →</button>
+          <button type="submit" class="btn">Start My Free Trial →</button>
           <p class="guarantee">No credit card. No commitment. Set up is free.</p>
         </form>
+
+        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="checkSubmit()"></iframe>
       </div>
     </div>
 
@@ -109,45 +106,31 @@
         <div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
         <h2>You're In.</h2>
         <p>We'll set up your firm profile and send you a login within 1 business day. Then you test the output with your own templates — before you commit to anything.</p>
-        <div class="email-note">
-          Questions? Email us at <strong>hello@docuflowlegal.com</strong>
-        </div>
+        <div class="email-note">Questions? Email us at <strong>hello@docuflowlegal.com</strong></div>
       </div>
     </div>
+    <p id="debug" style="display:none;color:#f87171;font-size:0.75rem;margin-top:8px;text-align:center;"></p>
   </div>
 
   <script>
-    async function submitTrial(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submit-btn');
-      btn.disabled = true;
-      btn.textContent = 'Submitting...';
-
-      const data = {
-        first_name: document.getElementById('first_name').value,
-        last_name: document.getElementById('last_name').value,
-        firm: document.getElementById('firm').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        practice: document.getElementById('practice').value,
-        source: 'trial-signup-page',
-        timestamp: new Date().toISOString()
-      };
-
-      try {
-        await fetch('https://formspree.io/f/xpwzvqvj', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-      } catch(err) {
-        // Fallback: log to console
-        console.log('Trial signup:', data);
-      }
-
-      document.getElementById('form-section').style.display = 'none';
-      document.getElementById('success-section').style.display = 'block';
+    function onSubmit() {
+      // Fields already synced via oninput/onchange
     }
+    function checkSubmit() {
+      var formSection = document.getElementById('form-section');
+      if (formSection.style.display !== 'none') return;
+      var success = document.getElementById('success-section');
+      success.style.display = 'block';
+      document.getElementById('debug').style.display = 'none';
+    }
+    // Fallback if iframe doesn't fire
+    setTimeout(function() {
+      var formSection = document.getElementById('form-section');
+      if (formSection.style.display !== 'none') return;
+      var success = document.getElementById('success-section');
+      success.style.display = 'block';
+      document.getElementById('debug').style.display = 'none';
+    }, 2000);
   </script>
 </body>
 </html>
