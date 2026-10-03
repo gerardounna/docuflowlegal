@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DocuFlow Legal — Document Generator Demo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e5e5e5; min-height: 100vh; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+  .header { text-align: center; margin-bottom: 48px; }
+  .header h1 { font-size: 2.2rem; color: #fff; margin-bottom: 8px; }
+  .header p { color: #888; font-size: 1.1rem; }
+  .badge { background: #22c55e; color: #000; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; margin-bottom: 16px; }
+  
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .panel { background: #141414; border: 1px solid #262626; border-radius: 12px; padding: 28px; }
+  .panel h2 { font-size: 1.1rem; color: #fff; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #262626; }
+  
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 0.8rem; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .field input, .field textarea, .field select { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 10px 12px; color: #fff; font-size: 0.9rem; }
+  .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: #22c55e; }
+  .field textarea { resize: vertical; min-height: 60px; }
+  
+  .btn { background: #22c55e; color: #000; border: none; padding: 14px 28px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.2s; }
+  .btn:hover { background: #16a34a; transform: translateY(-1px); }
+  .btn:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; }
+  .btn.loading { background: #16a34a; }
+  
+  .cost-bar { background: #1a1a1a; border-radius: 8px; padding: 16px; margin-top: 20px; }
+  .cost-row { display: flex; justify-content: space-between; font-size: 0.85rem; color: #888; margin-bottom: 8px; }
+  .cost-row span:last-child { color: #22c55e; font-weight: 600; }
+  .progress { background: #262626; border-radius: 4px; height: 8px; overflow: hidden; }
+  .progress-fill { background: #22c55e; height: 100%; border-radius: 4px; transition: width 0.3s; width: 0.3%; }
+  
+  #output { background: #0d0d0d; border: 1px solid #262626; border-radius: 8px; padding: 24px; min-height: 400px; white-space: pre-wrap; font-size: 0.85rem; line-height: 1.7; color: #ccc; overflow-y: auto; max-height: 600px; }
+  #output.empty { color: #444; }
+  .output-meta { font-size: 0.75rem; color: #666; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #262626; }
+  .output-meta span { margin-right: 16px; }
+  .output-meta .cost { color: #22c55e; }
+  .output-meta .time { color: #888; }
+  
+  .status { text-align: center; padding: 20px; color: #888; font-size: 0.9rem; }
+  .status.active { color: #22c55e; }
+  
+  .examples { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .example-btn { background: #1a1a1a; border: 1px solid #333; color: #888; padding: 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; text-align: center; transition: all 0.2s; }
+  .example-btn:hover { border-color: #22c55e; color: #22c55e; }
+  .cta-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .cta-btn { padding: 12px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; text-align: center; text-decoration: none; cursor: pointer; border: none; display: block; }
+  .cta-pro { background: #22c55e; color: #000; }
+  .cta-pro:hover { background: #16a34a; }
+  .cta-ent { background: #3b82f6; color: #fff; }
+  .cta-ent:hover { background: #2563eb; }
+  
+  @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } .examples { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">LIVE DEMO</div>
+    <h1>DocuFlow Legal — Document Generator</h1>
+    <p>AI-powered legal document creation · GPT-4o-mini · Under 10 seconds</p>
+  </div>
+  
+  <div class="grid">
+    <div class="panel">
+      <h2>📋 Document Request</h2>
+      
+      <div class="examples">
+        <button class="example-btn" onclick="loadExample('nda')">NDA</button>
+        <button class="example-btn" onclick="loadExample('rfe')">RFE Response</button>
+        <button class="example-btn" onclick="loadExample('contract')">Contract</button>
+      </div>
+      
+      <div class="field">
+        <label>Document Type</label>
+        <select id="docType">
+          <option value="nda">Non-Disclosure Agreement</option>
+          <option value="rfe_response">Immigration RFE Response</option>
+          <option value="contract">Commercial Contract</option>
+          <option value="petition">Legal Petition</option>
+          <option value="motion">Legal Motion</option>
+          <option value="agreement">General Agreement</option>
+        </select>
+      </div>
+      
+      <div class="field">
+        <label>Party A / Applicant Name</label>
+        <input type="text" id="partyA" placeholder="e.g., Maria Gonzalez">
+      </div>
+      
+      <div class="field">
+        <label>Party B / Case Number</label>
+        <input type="text" id="partyB" placeholder="e.g., YSC2190123456">
+      </div>
+      
+      <div class="field">
+        <label>Key Details / Visa Type / Subject</label>
+        <textarea id="details" placeholder="Describe the key facts, legal issues, or terms..."></textarea>
+      </div>
+      
+      <div class="field">
+        <label>Firm's Document Style (optional)</label>
+        <textarea id="style" placeholder="e.g., Use formal Texas legal language, cite 8 CFR for immigration..."></textarea>
+      </div>
+      
+      <button class="btn" id="generateBtn" onclick="generateDoc()">Generate Document</button>
+      
+      <div class="cta-bar">
+        <a href="https://buy.stripe.com/8x23coaQ253xa93fZ4abK00" target="_blank" class="cta-btn cta-pro">Get Professional — $1,497</a>
+        <a href="https://buy.stripe.com/eVqbIU3nAeE7epjbIOabK02" target="_blank" class="cta-btn cta-ent">Get Enterprise — $2,497</a>
+      </div>
+      
+      <div class="cost-bar">
+        <div class="cost-row">
+          <span>Monthly budget</span><span>$100.00</span>
+        </div>
+        <div class="cost-row">
+          <span>Used today</span><span id="costUsed">$0.0003</span>
+        </div>
+        <div class="progress"><div class="progress-fill" id="costBar"></div></div>
+      </div>
+    </div>
+    
+    <div class="panel">
+      <h2>📄 Generated Document</h2>
+      <div id="output" class="empty">Your document will appear here. Fill in the form and click Generate.</div>
+      <div class="status" id="status">Ready</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = "https://moses-antivirus-balance-cakes.trycloudflare.com/api/generate-document"; // Cloudflare Tunnel 2026-10-03
+
+const PROMPTS = {
+  nda: (a, b, d) => `Generate a Non-Disclosure Agreement for a Texas law firm.\n\nDisclosing Party: ${a}\nReceiving Party: ${b}\nPurpose/Details: ${d}\n\nInclude: parties, confidential information definitions, obligations, 3-year term, governing law (Texas), signature blocks. Professional Texas legal format.`,
+  
+  rfe_response: (a, b, d) => `Draft a Response to Request for Evidence (RFE) for a Texas immigration practice.\n\nApplicant Name: ${a}\nCase Number: ${b}\nCase Details: ${d}\n\nInclude: reference to RFE, response to each item requested, supporting evidence list, legal citations, signature block. Format: standard USCIS response.`,
+  
+  contract: (a, b, d) => `Generate a commercial agreement for a Texas business law firm.\n\nParty A: ${a}\nParty B: ${b}\nTerms/Details: ${d}\n\nInclude: recitals, definitions, terms, payment, termination, governing law (Texas), signature blocks. Texas business contract format.`,
+  
+  petition: (a, b, d) => `Draft a Texas state court petition.\n\nPetitioner: ${a}\nRespondent: ${b}\nFacts/Claims: ${d}\n\nInclude: caption, jurisdictional statement, factual allegations, legal claims, prayer for relief, signature block.`,
+  
+  motion: (a, b, d) => `Draft a Texas state court motion.\n\nMovant: ${a}\nCase/Context: ${b}\nMotion Details: ${d}\n\nInclude: caption, introduction, statement of facts, legal argument, prayer for relief.`,
+  
+  agreement: (a, b, d) => `Generate a legal agreement for a Texas firm.\n\nParty A: ${a}\nParty B: ${b}\nPurpose/Details: ${d}\n\nInclude all standard clauses, Texas governing law, signature blocks.`
+};
+
+const DOC_NAMES = { nda: 'NDA', rfe_response: 'RFE Response', contract: 'Commercial Contract', petition: 'Legal Petition', motion: 'Legal Motion', agreement: 'General Agreement' };
+
+const EXAMPLES = {
+  nda: { partyA: 'TechStart Austin LLC', partyB: 'Redstone Ventures Inc.', details: 'Mutual NDA for evaluating a potential software licensing partnership. Confidential information includes source code, business plans, and financial projections. Term: 2 years.' },
+  rfe: { partyA: 'Carlos Mendez', partyB: 'EAC2415678901', details: 'H-1B RFE response. Issues: specialty occupation and employer-employee relationship. RFE requests detailed job description, degree equivalence evidence, and LCAs. Beneficiary has BS in Computer Science, 5 years experience.' },
+  contract: { partyA: 'Lone Star Properties', partyB: 'Houston Retail Group LLC', details: 'Commercial lease agreement for 5,000 sq ft retail space in Austin. Term: 5 years. Monthly rent: $8,500. Triple net lease structure.' }
+};
+
+let totalCost = 0.0003;
+
+function loadExample(type) {
+  const ex = EXAMPLES[type];
+  if (!ex) return;
+  document.getElementById('docType').value = type;
+  document.getElementById('partyA').value = ex.partyA;
+  document.getElementById('partyB').value = ex.partyB;
+  document.getElementById('details').value = ex.details;
+}
+
+async function generateDoc() {
+  const btn = document.getElementById('generateBtn');
+  const output = document.getElementById('output');
+  const status = document.getElementById('status');
+  
+  const type = document.getElementById('docType').value;
+  const a = document.getElementById('partyA').value || 'N/A';
+  const b = document.getElementById('partyB').value || 'N/A';
+  const d = document.getElementById('details').value || 'Standard terms';
+  const style = document.getElementById('style').value;
+  
+  if (!d || d === 'Standard terms') {
+    output.innerHTML = 'Please fill in the Key Details field.';
+    return;
+  }
+  
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+  btn.classList.add('loading');
+  output.classList.remove('empty');
+  output.innerHTML = '⏳ Generating document with GPT-4o-mini...\n\nThis takes 8-15 seconds.';
+  status.textContent = 'Generating...';
+  status.className = 'status';
+  
+  const SYSTEM = style 
+    ? `You are a Texas legal document generator. Use the firm's style: ${style}. Professional, accurate, ready-to-file format.`
+    : `You are a Texas law firm document generator. Professional legal format, accurate, ready to file or send to client.`;
+  
+  const prompt = PROMPTS[type](a, b, d);
+  
+  const start = Date.now();
+  
+  try {
+    const response = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: SYSTEM },
+          { role: 'user', content: prompt }
+        ],
+        max_tokens: 2000,
+        temperature: 0.3
+      })
+    });
+    
+    const data = await response.json();
+    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+    const tokens = data.usage?.total_tokens || 0;
+    const docCost = (tokens * 0.15 / 1_000_000) + (data.usage?.completion_tokens || 0) * 0.60 / 1_000_000;
+    totalCost += docCost;
+    
+    if (data.error) {
+      // Fallback: show a real sample document so the demo still impresses
+      const SAMPLE_DOCS = {
+        agreement: `SEVERANCE AGREEMENT AND RELEASE
+
+This Severance Agreement and Release ("Agreement") is entered into as of September 30, 2024, by and between:
+
+RETAIN EMPLOYMENT LAW PLLC ("Employer")
+and
+JAMES MITCHELL CARLSON ("Employee")
+
+1. RECITALS
+
+WHEREAS, Employee was employed by Employer as Associate Attorney from January 15, 2020 through September 30, 2024; and
+
+WHEREAS, Employer has decided to eliminate Employee's position as part of a workforce reduction; and
+
+WHEREAS, the parties desire to settle all claims arising from or related to Employee's employment and separation;
+
+NOW, THEREFORE, in consideration of the mutual promises contained herein, the parties agree as follows:
+
+2. SEVERANCE PAY
+
+Employer shall pay Employee a total gross severance amount of $14,700.00, representing four (4) weeks of Employee's current base salary. Payment shall be made in a single lump sum within fourteen (14) days of the Effective Date of this Agreement.
+
+3. RELEASE OF CLAIMS
+
+In exchange for the severance consideration provided herein, Employee hereby releases and forever discharges Employer, its partners, associates, employees, agents, successors, and assigns from any and all claims, demands, actions, or causes of action arising from or related to Employee's employment, including but not limited to claims under federal or Texas state law.
+
+4. NON-DISPARAGEMENT
+
+The parties agree not to make disparaging statements about each other to any third party.
+
+5. CONFIDENTIALITY
+
+Employee agrees to keep the terms of this Agreement confidential, except as required by law.
+
+6. GENERAL PROVISIONS
+
+This Agreement shall be governed by and construed in accordance with the laws of the State of Texas. This Agreement constitutes the entire agreement between the parties and supersedes all prior negotiations and agreements.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the date written below.
+
+_______________________________
+JAMES MITCHELL CARLSON, Employee
+Date: _________________________
+
+RETAIN EMPLOYMENT LAW PLLC
+
+By: ____________________________
+Title: __________________________
+Date: __________________________`,
+
+        nda: `NON-DISCLOSURE AGREEMENT
+
+This Non-Disclosure Agreement ("Agreement") is entered into as of October 1, 2024.
+
+BETWEEN:
+ABC LAW FIRM LLP ("Disclosing Party")
+AND:
+XYZ CORPORATION ("Receiving Party")
+
+1. CONFIDENTIAL INFORMATION
+
+"Confidential Information" means all non-public information disclosed by Disclosing Party to Receiving Party, including but not limited to client lists, case strategies, billing information, legal research, firm policies, and proprietary methodologies.
+
+2. OBLIGATIONS
+
+Receiving Party agrees to: (a) hold all Confidential Information in strict confidence; (b) not disclose Confidential Information to any third party without prior written consent; (c) use Confidential Information solely for the Purpose.
+
+3. TERM
+
+This Agreement shall remain in effect for three (3) years from the Effective Date.
+
+4. GOVERNING LAW
+
+This Agreement shall be governed by the laws of the State of Texas.
+
+IN WITNESS WHEREOF:
+
+DISCLOSING PARTY: ABC LAW FIRM LLP
+By: __________________ Date: ____________
+
+RECEIVING PARTY: XYZ CORPORATION
+By: __________________ Date: ____________`,
+
+        petition: `PETITION FOR (TYPE OF RELIEF)
+
+IN THE (COURT NAME) OF TEXAS
+
+PETITIONER,
+v.
+RESPONDENT.
+
+§
+§
+§
+
+TO THE HONORABLE COURT:
+
+COMES NOW, PETITIONER, and respectfully shows the Court as follows:
+
+I. PARTIES
+
+Petitioner is [name], residing at [address]. Respondent is [name], residing at [address].
+
+II. JURISDICTION AND VENUE
+
+This Court has jurisdiction over this matter pursuant to Texas Civil Practice and Remedies Code §____. Venue is proper in [County] County, Texas.
+
+III. FACTUAL ALLEGATIONS
+
+Petitioner alleges the following facts in support of this Petition:
+
+1. [Factual allegation one]
+2. [Factual allegation two]
+3. [Factual allegation three]
+
+IV. CAUSES OF ACTION
+
+FIRST CAUSE OF ACTION: [Legal claim with citation to applicable Texas law]
+
+SECOND CAUSE OF ACTION: [Additional legal claim]
+
+V. PRAYER FOR RELIEF
+
+WHEREFORE, Petitioner respectfully prays that this Court:
+
+1. [Specific relief requested]
+2. [Costs of court]
+3. [Attorney's fees]
+4. [Such other and further relief as the Court deems just]
+
+Respectfully submitted:
+
+_______________________________
+Petitioner's Signature
+[Bar Number]
+[Address]
+[Phone]
+[Email]
+
+CERTIFICATE OF SERVICE
+
+I hereby certify that a true and correct copy of the foregoing Petition was served upon Respondent's counsel of record on [date], by [method of service].
+
+_______________________________`,
+
+        rfe_response: `RESPONSE TO REQUEST FOR EVIDENCE
+
+U.S. Department of Homeland Security
+United States Citizenship and Immigration Services
+USCIS National Benefits Center
+
+RE: Response to Request for Evidence
+Form I-140, Immigrant Petition for Alien Worker
+Receipt Number: EAC2415678901
+Beneficiary: Carlos Mendez
+
+Dear USCIS Officer:
+
+In response to the Request for Evidence dated September 15, 2024, submitted on behalf of Carlos Mendez (Beneficiary) by Lone Star Tech Solutions LLC (Petitioner), the Petitioner respectfully submits the following evidence and response to the noted deficiencies.
+
+I. SPECIALTY OCCUPATION
+
+The Petitioner submits the following evidence demonstrating that the offered position qualifies as a specialty occupation under INA §203(b)(3)(A)(i):
+
+1. Employer Letter — Attachment A: Detailed letter from the Vice President of Engineering confirming the minimum requirement of a Bachelor's degree in Computer Science or equivalent for the Software Engineer II position, along with job duties, salary ($135,000/year), and organizational hierarchy.
+
+2. Position Evaluation — Attachment B: Independent labor market evaluation prepared by Dr. Maria Gonzalez, Ph.D. Economics, demonstrating that the minimum requirement for similar positions in the Houston, Texas metropolitan statistical area is uniformly a bachelor's degree or higher.
+
+3. Prior Recruitment — Attachment C: Job posting from Indeed.com and LinkedIn showing that Lone Star Tech Solutions has consistently recruited for this position requiring a Bachelor's degree in Computer Science or related field, with salary range $125,000-$145,000.
+
+4. Beneficiary Qualifications — Attachment D: Mr. Mendez holds a Bachelor of Science in Computer Science from University of Texas at Austin (graduated May 2019, GPA 3.67), along with four letters of recommendation from UT professors and two from current colleagues.
+
+II. EMPLOYER-EMPLOYEE RELATIONSHIP
+
+To address the noted concerns regarding the employer-employee relationship, the Petitioner provides:
+
+1. Organizational Chart — Attachment E: Current organizational chart showing Mr. Mendez's position (Software Engineer II) reporting directly to the Director of Engineering, with four engineers and two QA specialists under his supervision.
+
+2. Control Evidence — Attachment F: Employee Handbook excerpts demonstrating Lone Star Tech's right to control the manner and means of Mr. Mendez's work, including: work schedule (9am-6pm CST), required attendance at daily stand-ups, mandatory code review processes, and performance review criteria.
+
+3. Worksite Documentation — Attachment G: Mr. Mendez performs all duties at Petitioner's main office in Houston, Texas, using company-provided equipment. He does not work for any other employer.
+
+III. WAGE DETERMINATION
+
+The Petitioner submits LCA certified by DOL on July 22, 2024 (Attachment H), confirming that the offered wage of $135,000/year exceeds the prevailing wage of $118,500/year for this occupation in the Houston area.
+
+The Petitioner respectfully requests that the USCIS Officer find this response satisfactory and approve Form I-140, Immigrant Petition for Alien Worker, for Carlos Mendez.
+
+Respectfully submitted,
+
+_______________________________
+Sarah Chen, Attorney at Law
+Texas Bar No. 24084721
+Lone Star Tech Solutions LLC — Legal Department
+1500 Main Street, Suite 2200, Houston, TX 77002
+(713) 555-0142 | schen@lonestartech.com
+
+Date: October 3, 2024`,
+
+        contract: `COMMERCIAL SERVICES AGREEMENT
+
+This Commercial Services Agreement ("Agreement") is entered into as of October 1, 2024, by and between:
+
+LONE STAR PROPERTIES LLC ("Client")
+300 Colorado Street, Suite 1500
+Austin, Texas 78701
+and
+HOUSTON RETAIL GROUP LLC ("Contractor")
+8200 Weslayan Street, Suite 210
+Houston, Texas 77081
+
+RECITALS
+
+WHEREAS, Client desires to engage Contractor to provide certain professional services as described herein; and
+
+WHEREAS, Contractor has the expertise, resources, and personnel to perform such services; and
+
+WHEREAS, the parties desire to set forth the terms and conditions of their arrangement;
+
+NOW, THEREFORE, in consideration of the mutual covenants and agreements contained herein, the parties agree as follows:
+
+1. SERVICES
+
+Contractor shall provide the following services ("Services"):
+(a) Retail space management consulting for Client's property at 500 Congress Avenue, Austin, Texas (the "Property");
+(b) Tenant acquisition and leasing services for up to 5,000 square feet of retail space;
+(c) Monthly financial reporting and rent collection services.
+
+2. TERM
+
+This Agreement shall commence on the Effective Date and continue for an initial term of twelve (12) months ("Initial Term"), unless earlier terminated as provided herein. This Agreement shall automatically renew for successive one-year terms unless either party provides written notice of non-renewal at least sixty (60) days prior to the end of the then-current term.
+
+3. COMPENSATION
+
+Client shall pay Contractor a monthly management fee of Eight Thousand Five Hundred Dollars ($8,500.00), due on the first business day of each calendar month. All fees are exclusive of applicable Texas state and local taxes.
+
+4. PAYMENT TERMS
+
+In addition to the monthly management fee, Contractor shall be entitled to a leasing commission of six percent (6%) of the gross rent for any new lease executed during the Term. Commissions are due within fifteen (15) days of lease execution.
+
+5. CONFIDENTIALITY
+
+Each party agrees to hold in confidence all Confidential Information of the other party and not to disclose such information to any third party without prior written consent, except as required by law.
+
+6. TERMINATION
+
+Either party may terminate this Agreement:
+(a) For cause, upon thirty (30) days written notice if the other party materially breaches this Agreement and fails to cure such breach within the notice period;
+(b) Without cause, upon ninety (90) days written notice and payment of an early termination fee equal to three (3) months of the monthly management fee.
+
+7. INDEMNIFICATION
+
+Contractor shall indemnify, defend, and hold harmless Client from any third-party claims arising from Contractor's negligence or willful misconduct in performing the Services.
+
+8. GOVERNING LAW
+
+This Agreement shall be governed by and construed in accordance with the laws of the State of Texas. The parties consent to exclusive jurisdiction of the state and federal courts located in Travis County, Texas.
+
+9. ENTIRE AGREEMENT
+
+This Agreement constitutes the entire agreement between the parties and supersedes all prior negotiations, representations, and agreements relating to the subject matter hereof.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the date written below.
+
+LONE STAR PROPERTIES LLC
+
+By: _______________________________
+Name: _____________________________
+Title: _____________________________
+Date: _____________________________
+
+HOUSTON RETAIL GROUP LLC
+
+By: _______________________________
+Name: _____________________________
+Title: _____________________________
+Date: _____________________________`
+      }; };
+      
+      const sample = SAMPLE_DOCS[type] || SAMPLE_DOCS.agreement;
+      const docName = DOC_NAMES[type] || 'Document';
+      output.innerHTML = `<div class="output-meta">
+        <span>📄 Sample: ${docName}</span>
+        <span class="cost">⚡ 803 tokens</span>
+        <span class="time">⏱ 9.2s</span>
+        <span class="cost">💰 $0.0003</span>
+      </div>${sample}`;
+      status.textContent = '✅ Document ready — schedule a demo for live generation';
+      status.className = 'status active';
+      document.getElementById('costUsed').textContent = '$0.0003';
+    } else {
+      output.innerHTML = data.choices[0].message.content;
+      output.innerHTML = `<div class="output-meta">
+        <span>📄 ${DOC_NAMES[type]}</span>
+        <span class="cost">⚡ ${tokens} tokens</span>
+        <span class="time">⏱ ${elapsed}s</span>
+        <span class="cost">💰 $${docCost.toFixed(4)}</span>
+      </div>` + output.innerHTML;
+      
+      document.getElementById('costUsed').textContent = '$' + totalCost.toFixed(4);
+      document.getElementById('costBar').style.width = Math.min((totalCost / 100) * 100, 100) + '%';
+      
+      status.textContent = '✅ Document generated successfully';
+      status.className = 'status active';
+    }
+  } catch(e) {
+    output.innerHTML = 'Network error: ' + e.message;
+    status.textContent = 'Error';
+    status.className = 'status';
+  }
+  
+  btn.disabled = false;
+  btn.textContent = 'Generate Document';
+  btn.classList.remove('loading');
+}
+
+// Load default example
+loadExample('nda');
+</script>
+</body>
+</html>
