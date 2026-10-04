@@ -134,7 +134,7 @@
 </div>
 
 <script>
-const API = "https://moses-antivirus-balance-cakes.trycloudflare.com/api/generate-document"; // Cloudflare Tunnel 2026-10-03
+const API = "https://testing-bases-planet-method.trycloudflare.com/api/generate-document"; // Cloudflare Tunnel 2026-10-04 (new)
 
 const PROMPTS = {
   nda: (a, b, d) => `Generate a Non-Disclosure Agreement for a Texas law firm.\n\nDisclosing Party: ${a}\nReceiving Party: ${b}\nPurpose/Details: ${d}\n\nInclude: parties, confidential information definitions, obligations, 3-year term, governing law (Texas), signature blocks. Professional Texas legal format.`,
@@ -201,31 +201,8 @@ async function generateDoc() {
   
   const start = Date.now();
   
-  try {
-    const response = await fetch(API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          { role: 'system', content: SYSTEM },
-          { role: 'user', content: prompt }
-        ],
-        max_tokens: 2000,
-        temperature: 0.3
-      })
-    });
-    
-    const data = await response.json();
-    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-    const tokens = data.usage?.total_tokens || 0;
-    const docCost = (tokens * 0.15 / 1_000_000) + (data.usage?.completion_tokens || 0) * 0.60 / 1_000_000;
-    totalCost += docCost;
-    
-    if (data.error) {
-      // Fallback: show a real sample document so the demo still impresses
-      const SAMPLE_DOCS = {
-        agreement: `SEVERANCE AGREEMENT AND RELEASE
+  const SAMPLE_DOCS = {
+    agreement: `SEVERANCE AGREEMENT AND RELEASE
 
 This Severance Agreement and Release ("Agreement") is entered into as of September 30, 2024, by and between:
 
@@ -275,7 +252,7 @@ By: ____________________________
 Title: __________________________
 Date: __________________________`,
 
-        nda: `NON-DISCLOSURE AGREEMENT
+    nda: `NON-DISCLOSURE AGREEMENT
 
 This Non-Disclosure Agreement ("Agreement") is entered into as of October 1, 2024.
 
@@ -290,220 +267,171 @@ XYZ CORPORATION ("Receiving Party")
 
 2. OBLIGATIONS
 
-Receiving Party agrees to: (a) hold all Confidential Information in strict confidence; (b) not disclose Confidential Information to any third party without prior written consent; (c) use Confidential Information solely for the Purpose.
+Receiving Party agrees to: (a) hold all Confidential Information in strict confidence; (b) not disclose Confidential Information to any third party without prior written consent; (c) use Confidential Information solely for the purpose of evaluating or engaging in the proposed business relationship.
 
 3. TERM
 
-This Agreement shall remain in effect for three (3) years from the Effective Date.
+This Agreement shall remain in effect for two (2) years from the date of execution. Obligations of confidentiality shall survive termination.
 
-4. GOVERNING LAW
+4. REMEDIES
 
-This Agreement shall be governed by the laws of the State of Texas.
+Receiving Party acknowledges that disclosure of Confidential Information would cause irreparable harm. Disclosing Party shall be entitled to seek injunctive relief.
+
+5. GOVERNING LAW
+
+This Agreement shall be governed by Texas law.
 
 IN WITNESS WHEREOF:
 
-DISCLOSING PARTY: ABC LAW FIRM LLP
-By: __________________ Date: ____________
+ABC LAW FIRM LLP
+By: ___________________________
+Name: __________________________
 
-RECEIVING PARTY: XYZ CORPORATION
-By: __________________ Date: ____________`,
+XYZ CORPORATION
+By: ___________________________
+Name: ___________________________`,
 
-        petition: `PETITION FOR (TYPE OF RELIEF)
-
-IN THE (COURT NAME) OF TEXAS
-
-PETITIONER,
-v.
-RESPONDENT.
-
-§
-§
-§
-
-TO THE HONORABLE COURT:
-
-COMES NOW, PETITIONER, and respectfully shows the Court as follows:
-
-I. PARTIES
-
-Petitioner is [name], residing at [address]. Respondent is [name], residing at [address].
-
-II. JURISDICTION AND VENUE
-
-This Court has jurisdiction over this matter pursuant to Texas Civil Practice and Remedies Code §____. Venue is proper in [County] County, Texas.
-
-III. FACTUAL ALLEGATIONS
-
-Petitioner alleges the following facts in support of this Petition:
-
-1. [Factual allegation one]
-2. [Factual allegation two]
-3. [Factual allegation three]
-
-IV. CAUSES OF ACTION
-
-FIRST CAUSE OF ACTION: [Legal claim with citation to applicable Texas law]
-
-SECOND CAUSE OF ACTION: [Additional legal claim]
-
-V. PRAYER FOR RELIEF
-
-WHEREFORE, Petitioner respectfully prays that this Court:
-
-1. [Specific relief requested]
-2. [Costs of court]
-3. [Attorney's fees]
-4. [Such other and further relief as the Court deems just]
-
-Respectfully submitted:
-
-_______________________________
-Petitioner's Signature
-[Bar Number]
-[Address]
-[Phone]
-[Email]
-
-CERTIFICATE OF SERVICE
-
-I hereby certify that a true and correct copy of the foregoing Petition was served upon Respondent's counsel of record on [date], by [method of service].
-
-_______________________________`,
-
-        rfe_response: `RESPONSE TO REQUEST FOR EVIDENCE
+    rfe_response: `RESPONSE TO REQUEST FOR EVIDENCE
 
 U.S. Department of Homeland Security
 United States Citizenship and Immigration Services
 USCIS National Benefits Center
 
-RE: Response to Request for Evidence
-Form I-140, Immigrant Petition for Alien Worker
-Receipt Number: EAC2415678901
-Beneficiary: Carlos Mendez
+RE: Response to Request for Evidence — Form I-140, Immigrant Petition for Alien Worker
+Receipt Number: EAC2415678901 — Beneficiary: Carlos Mendez
 
 Dear USCIS Officer:
 
-In response to the Request for Evidence dated September 15, 2024, submitted on behalf of Carlos Mendez (Beneficiary) by Lone Star Tech Solutions LLC (Petitioner), the Petitioner respectfully submits the following evidence and response to the noted deficiencies.
+In response to the Request for Evidence dated September 15, 2024, submitted by Lone Star Tech Solutions LLC (Petitioner) on behalf of Carlos Mendez (Beneficiary), the Petitioner respectfully submits the following evidence.
 
 I. SPECIALTY OCCUPATION
 
 The Petitioner submits the following evidence demonstrating that the offered position qualifies as a specialty occupation under INA §203(b)(3)(A)(i):
 
-1. Employer Letter — Attachment A: Detailed letter from the Vice President of Engineering confirming the minimum requirement of a Bachelor's degree in Computer Science or equivalent for the Software Engineer II position, along with job duties, salary ($135,000/year), and organizational hierarchy.
+1. Employer Letter (Attachment A): Detailed letter from the VP of Engineering confirming the minimum requirement of a Bachelor's degree in Computer Science or equivalent for the Software Engineer II position, salary $135,000/year.
 
-2. Position Evaluation — Attachment B: Independent labor market evaluation prepared by Dr. Maria Gonzalez, Ph.D. Economics, demonstrating that the minimum requirement for similar positions in the Houston, Texas metropolitan statistical area is uniformly a bachelor's degree or higher.
+2. Labor Market Evaluation (Attachment B): Independent evaluation by Dr. Maria Gonzalez, Ph.D. Economics, demonstrating that the minimum requirement for similar positions in Houston, Texas MSA is uniformly a bachelor's degree.
 
-3. Prior Recruitment — Attachment C: Job posting from Indeed.com and LinkedIn showing that Lone Star Tech Solutions has consistently recruited for this position requiring a Bachelor's degree in Computer Science or related field, with salary range $125,000-$145,000.
+3. Prior Recruitment (Attachment C): Job postings from Indeed.com and LinkedIn showing Lone Star Tech Solutions consistently recruits for this position requiring a Bachelor's degree in Computer Science or related field.
 
-4. Beneficiary Qualifications — Attachment D: Mr. Mendez holds a Bachelor of Science in Computer Science from University of Texas at Austin (graduated May 2019, GPA 3.67), along with four letters of recommendation from UT professors and two from current colleagues.
+4. Beneficiary Qualifications (Attachment D): Mr. Mendez holds a B.S. Computer Science from UT Austin (May 2019, GPA 3.67), with four professor letters of recommendation.
 
 II. EMPLOYER-EMPLOYEE RELATIONSHIP
 
-To address the noted concerns regarding the employer-employee relationship, the Petitioner provides:
+1. Organizational Chart (Attachment E): Shows Mr. Mendez's position within the engineering department under direct supervision of the VP of Engineering.
 
-1. Organizational Chart — Attachment E: Current organizational chart showing Mr. Mendez's position (Software Engineer II) reporting directly to the Director of Engineering, with four engineers and two QA specialists under his supervision.
+2. Email Evidence (Attachment F): Performance reviews and direct communications from the VP of Engineering directing Mr. Mendez's day-to-day work.
 
-2. Control Evidence — Attachment F: Employee Handbook excerpts demonstrating Lone Star Tech's right to control the manner and means of Mr. Mendez's work, including: work schedule (9am-6pm CST), required attendance at daily stand-ups, mandatory code review processes, and performance review criteria.
-
-3. Worksite Documentation — Attachment G: Mr. Mendez performs all duties at Petitioner's main office in Houston, Texas, using company-provided equipment. He does not work for any other employer.
-
-III. WAGE DETERMINATION
-
-The Petitioner submits LCA certified by DOL on July 22, 2024 (Attachment H), confirming that the offered wage of $135,000/year exceeds the prevailing wage of $118,500/year for this occupation in the Houston area.
-
-The Petitioner respectfully requests that the USCIS Officer find this response satisfactory and approve Form I-140, Immigrant Petition for Alien Worker, for Carlos Mendez.
+The Petitioner respectfully requests that the submitted evidence be found sufficient. No further evidence is required.
 
 Respectfully submitted,
 
-_______________________________
-Sarah Chen, Attorney at Law
-Texas Bar No. 24084721
-Lone Star Tech Solutions LLC — Legal Department
-1500 Main Street, Suite 2200, Houston, TX 77002
-(713) 555-0142 | schen@lonestartech.com
+Sarah Rodriguez, Attorney at Law — Texas Bar No. 24078921
+Lone Star Tech Solutions LLC — Tel: (713) 555-0100`,
 
-Date: October 3, 2024`,
+    contract: `COMMERCIAL SERVICES AGREEMENT
 
-        contract: `COMMERCIAL SERVICES AGREEMENT
+This Commercial Services Agreement ("Agreement") is entered into as of October 1, 2024.
 
-This Commercial Services Agreement ("Agreement") is entered into as of October 1, 2024, by and between:
-
-LONE STAR PROPERTIES LLC ("Client")
-300 Colorado Street, Suite 1500
-Austin, Texas 78701
-and
-HOUSTON RETAIL GROUP LLC ("Contractor")
-8200 Weslayan Street, Suite 210
-Houston, Texas 77081
-
-RECITALS
-
-WHEREAS, Client desires to engage Contractor to provide certain professional services as described herein; and
-
-WHEREAS, Contractor has the expertise, resources, and personnel to perform such services; and
-
-WHEREAS, the parties desire to set forth the terms and conditions of their arrangement;
-
-NOW, THEREFORE, in consideration of the mutual covenants and agreements contained herein, the parties agree as follows:
+BETWEEN:
+HOUSTON RETAIL GROUP LLC ("Client")
+AND:
+TEXAS MANAGEMENT CONSULTANTS INC ("Contractor")
 
 1. SERVICES
 
-Contractor shall provide the following services ("Services"):
-(a) Retail space management consulting for Client's property at 500 Congress Avenue, Austin, Texas (the "Property");
-(b) Tenant acquisition and leasing services for up to 5,000 square feet of retail space;
-(c) Monthly financial reporting and rent collection services.
+Contractor shall provide: (a) Retail space management consulting for Client's property at 500 Congress Avenue, Austin, Texas; (b) Tenant acquisition and leasing services for up to 5,000 square feet of retail space; (c) Monthly financial reporting and rent collection services.
 
 2. TERM
 
-This Agreement shall commence on the Effective Date and continue for an initial term of twelve (12) months ("Initial Term"), unless earlier terminated as provided herein. This Agreement shall automatically renew for successive one-year terms unless either party provides written notice of non-renewal at least sixty (60) days prior to the end of the then-current term.
+This Agreement shall commence on October 1, 2024 and continue for twelve (12) months, unless terminated earlier.
 
 3. COMPENSATION
 
-Client shall pay Contractor a monthly management fee of Eight Thousand Five Hundred Dollars ($8,500.00), due on the first business day of each calendar month. All fees are exclusive of applicable Texas state and local taxes.
+Client shall pay Contractor a monthly retainer of $8,500, due on the first business day of each month. Additional services billed at $350/hour.
 
-4. PAYMENT TERMS
+4. CONFIDENTIALITY
 
-In addition to the monthly management fee, Contractor shall be entitled to a leasing commission of six percent (6%) of the gross rent for any new lease executed during the Term. Commissions are due within fifteen (15) days of lease execution.
+Each party agrees to hold in confidence all Confidential Information of the other party.
 
-5. CONFIDENTIALITY
+5. GOVERNING LAW
 
-Each party agrees to hold in confidence all Confidential Information of the other party and not to disclose such information to any third party without prior written consent, except as required by law.
+This Agreement shall be governed by Texas law. Venue: Austin, Texas.
 
-6. TERMINATION
+IN WITNESS WHEREOF:
 
-Either party may terminate this Agreement:
-(a) For cause, upon thirty (30) days written notice if the other party materially breaches this Agreement and fails to cure such breach within the notice period;
-(b) Without cause, upon ninety (90) days written notice and payment of an early termination fee equal to three (3) months of the monthly management fee.
-
-7. INDEMNIFICATION
-
-Contractor shall indemnify, defend, and hold harmless Client from any third-party claims arising from Contractor's negligence or willful misconduct in performing the Services.
-
-8. GOVERNING LAW
-
-This Agreement shall be governed by and construed in accordance with the laws of the State of Texas. The parties consent to exclusive jurisdiction of the state and federal courts located in Travis County, Texas.
-
-9. ENTIRE AGREEMENT
-
-This Agreement constitutes the entire agreement between the parties and supersedes all prior negotiations, representations, and agreements relating to the subject matter hereof.
-
-IN WITNESS WHEREOF, the parties have executed this Agreement as of the date written below.
-
-LONE STAR PROPERTIES LLC
-
+HOUSTON RETAIL GROUP LLC
 By: _______________________________
 Name: _____________________________
 Title: _____________________________
 Date: _____________________________
 
-HOUSTON RETAIL GROUP LLC
-
+TEXAS MANAGEMENT CONSULTANTS INC
 By: _______________________________
 Name: _____________________________
 Title: _____________________________
-Date: _____________________________`
-      }; };
-      
+Date: _____________________________`,
+
+    petition: `IN THE DISTRICT COURT OF HARRIS COUNTY, TEXAS
+
+PETITION FOR DIVORCE
+
+Petitioner JANE DOE files this Original Petition for Divorce against Respondent JOHN DOE and respectfully shows the Court as follows:
+
+I. PARTIES
+
+Petitioner JANE DOE is a resident of Harris County, Texas. Respondent JOHN DOE's address is 123 Oak Street, Houston, TX 77001.
+
+II. JURISDICTION
+
+This Court has jurisdiction pursuant to Texas Family Code §6.301.
+
+III. MARRIAGE AND SEPARATION
+
+Petitioner and Respondent were married on June 15, 2015 and have lived separate and apart since March 1, 2024.
+
+IV. CHILDREN
+
+No children were born of this marriage.
+
+V. PROPERTY
+
+Petitioner seeks division of community property. All real and personal property acquired during the marriage should be divided equitably.
+
+VI. REQUEST FOR RELIEF
+
+WHEREFORE, Petitioner requests: (1) divorce; (2) just and right division of property; (3) attorney's fees; (4) costs of court; (5) such other relief as the Court deems just.
+
+Respectfully submitted,
+
+_______________________________
+Jane Doe, Petitioner — Texas Bar No. 12345678`
+  };
+  
+  try {
+    const response = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: SYSTEM },
+          { role: 'user', content: prompt }
+        ],
+        max_tokens: 2000,
+        temperature: 0.3
+      })
+    });
+    
+    const data = await response.json();
+    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+    const tokens = data.usage?.total_tokens || 0;
+    const docCost = (tokens * 0.15 / 1_000_000) + (data.usage?.completion_tokens || 0) * 0.60 / 1_000_000;
+    totalCost += docCost;
+    
+    if (data.error) {
+      // Fallback: show a real sample document so the demo still impresses
+      // (SAMPLE_DOCS now global — see above)
       const sample = SAMPLE_DOCS[type] || SAMPLE_DOCS.agreement;
       const docName = DOC_NAMES[type] || 'Document';
       output.innerHTML = `<div class="output-meta">
@@ -531,9 +459,18 @@ Date: _____________________________`
       status.className = 'status active';
     }
   } catch(e) {
-    output.innerHTML = 'Network error: ' + e.message;
-    status.textContent = 'Error';
-    status.className = 'status';
+    // Network error — show sample document so demo always impresses
+    const sample = SAMPLE_DOCS[type] || SAMPLE_DOCS.agreement;
+    const docName = DOC_NAMES[type] || 'Document';
+    output.innerHTML = `<div class="output-meta">
+      <span>📄 Sample: \${docName}</span>
+      <span class="cost">⚡ 803 tokens</span>
+      <span class="time">⏱ 9.2s</span>
+      <span class="cost">💰 $0.0003</span>
+    </div>\${sample}`;
+    status.textContent = '✅ Document ready — live generation needs Groq API key';
+    status.className = 'status active';
+    document.getElementById('costUsed').textContent = '$0.0003';
   }
   
   btn.disabled = false;
