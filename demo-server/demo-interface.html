@@ -478,12 +478,8 @@ Jane Doe, Petitioner — Texas Bar No. 12345678`
   btn.classList.remove('loading');
 }
 
-// Load default example and auto-generate so page is never empty
+// Load default example
 loadExample('nda');
-// Auto-trigger generation so prospect always sees a document immediately
-window.addEventListener('load', () => {
-  setTimeout(generateDoc, 500);
-});
 </script>
 </body>
 </html>

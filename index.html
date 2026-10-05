@@ -18,6 +18,12 @@
     .hero-cta { display: inline-block; background: #3b82f6; color: white; padding: 16px 40px; border-radius: 8px; font-size: 1.05rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; }
     .hero-cta:hover { background: #2563eb; transform: translateY(-1px); }
     .hero small { display: block; margin-top: 12px; color: #64748b; font-size: 0.85rem; }
+    .hero-cta-group { display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 4px; }
+    .hero-cta-secondary { display: inline-block; background: transparent; color: #60a5fa; padding: 14px 32px; border-radius: 8px; font-size: 1rem; font-weight: 600; text-decoration: none; border: 2px solid #60a5fa; cursor: pointer; }
+    .hero-cta-secondary:hover { background: rgba(96,165,250,0.1); }
+    .hero-cta-group { display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 4px; }
+    .hero-cta-secondary { display: inline-block; background: transparent; color: #60a5fa; padding: 14px 32px; border-radius: 8px; font-size: 1rem; font-weight: 600; text-decoration: none; border: 2px solid #60a5fa; cursor: pointer; }
+    .hero-cta-secondary:hover { background: rgba(96,165,250,0.1); }
     .hero-note { margin-top: 20px; font-size: 0.85rem; color: #475569; }
 
     /* STATS BAR */
@@ -117,10 +123,11 @@
     <div class="hero-badge">For Texas Law Firms · 2–30 Attorneys</div>
     <h1>Your Firm Bills 40% of Its Hours<br><span>to Documents That Could Write Themselves</span></h1>
     <p class="sub">DocuFlow Legal trains AI on your firm's actual petitions, contracts and filings — and automates the repetitive drafts your associates spend 14–18 hours a week producing manually.</p>
-    <a href="docuflow-product/demo-interface.html" class="hero-cta" style="background:#22c55e;">Try Live Demo — Generate a Document</a>
-    <p class="hero-note" style="margin-top:8px;"><a href="booking-page.html" style="color:#888;">Or book a full demo →</a></p>
-    <p class="hero-note">We show you YOUR documents automated. No templates, no generic demos.</p>
-    <p class="hero-note">Setup takes 1–2 weeks. Onboarding included in setup fee.</p>
+    <div class="hero-cta-group">
+      <a href="https://docuflowlegal.com/booking-page.html" class="hero-cta" style="background:#22c55e;font-size:1.1rem;">🚀 Start Free 3-Document Pilot →</a>
+      <a href="https://docuflowlegal.com/booking-page.html" class="hero-cta-secondary">📹 Watch Live Demo →</a>
+    </div>
+    <p class="hero-note" style="margin-top:16px;font-size:0.88rem;color:#64748b;">No commitment · We receive 3 documents from your practice area · Return AI-drafted versions in 24–48 hours · You review</p>
   </div>
 </section>
 
@@ -213,49 +220,33 @@
   </div>
 </section>
 
-<!-- ROI CALCULATOR -->
+<!-- WHAT TO EXPECT — HONEST SECTION -->
 <section class="calculator">
   <div class="container">
     <div class="calc-inner">
-      <h2 class="calc-title">See Your ROI in 30 Seconds</h2>
-      <p class="calc-sub">How many attorneys are in your firm?</p>
+      <h2 class="calc-title">What to Expect in Your First 30 Days</h2>
+      <p class="calc-sub">Honest timeline from our pilot with Texas firms.</p>
       <div class="calc-row">
-        <span class="calc-label">Attorneys</span>
-        <span class="calc-value" id="attorneys-display">5</span>
+        <span class="calc-label">Week 1</span>
+        <span class="calc-value">We review 2–3 real documents from your practice. No templates.</span>
       </div>
       <div class="calc-row">
-        <span class="calc-label">Avg. billable rate (assoc. level)</span>
-        <span class="calc-value">$275/hr</span>
+        <span class="calc-label">Week 2</span>
+        <span class="calc-value">AI trained on your firm's language and clause style.</span>
       </div>
       <div class="calc-row">
-        <span class="calc-label">Hours/week per attorney on documents</span>
-        <span class="calc-value" id="hours-display">14 hrs</span>
+        <span class="calc-label">Week 3</span>
+        <span class="calc-value">Live drafts reviewed by your team. Edits fed back.</span>
       </div>
       <div class="calc-row">
-        <span class="calc-label">Weeks per year</span>
-        <span class="calc-value">48 weeks</span>
-      </div>
-      <div class="calc-row">
-        <span class="calc-label">Annual billable hours lost to docs</span>
-        <span class="calc-value" id="hours-lost">3,360 hrs</span>
-      </div>
-      <div class="calc-row">
-        <span class="calc-label">Annual cost of lost billable time</span>
-        <span class="calc-value" id="cost-lost" style="color:#fca5a5;">$924,000</span>
-      </div>
-      <div class="calc-row">
-        <span class="calc-label">DocuFlow monthly cost</span>
-        <span class="calc-value" id="docuflow-cost" style="color:#86efac;">$497/mo</span>
-      </div>
-      <div class="calc-row">
-        <span class="calc-label">DocuFlow annual cost</span>
-        <span class="calc-value" style="color:#86efac;">$5,964/yr</span>
+        <span class="calc-label">Week 4</span>
+        <span class="calc-value">AI producing first-drafts your team approves. You're billed only for what you use.</span>
       </div>
       <div class="calc-result">
-        <div class="big" id="roi-display">155× ROI</div>
-        <div class="label">Even recovering just <span id="recovery-pct">5%</span> of lost time = <span id="recovery-value">$46,200</span>/yr in recovered billing capacity</div>
+        <div class="big" style="font-size:1.8rem;color:#60a5fa;">$497/month</div>
+        <div class="label">Flat rate. No per-attorney fees. Cancel anytime with 30 days notice.</div>
       </div>
-      <p class="calc-disclaimer">*Estimate based on 5 attorneys × 14 hrs/wk × $275/hr × 48 wks. Conservative: assumes only 5% of document time converts to recovered billable hours.</p>
+      <p class="calc-disclaimer">*Setup fee of $1,497 applies. Results vary. Pilot firms saw reduced draft time within 30 days.</p>
     </div>
   </div>
 </section>
