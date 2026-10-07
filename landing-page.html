@@ -430,7 +430,7 @@ function handleCapture(e) {
 <section class="solution">
   <div class="container">
     <h2 class="section-title">How DocuFlow Works</h2>
-    <p class="section-sub">Not a template library. Not a chatbot. AI trained on your firm's actual documents.</p>
+    <p class="section-sub">Your firm's knowledge base, always up to date. Drafts in your voice, not generic legalese.</p>
     <div class="how-grid">
       <div class="how-step">
         <div class="step-num">1</div>
@@ -505,8 +505,8 @@ function handleCapture(e) {
 <!-- SOCIAL PROOF -->
   <section class="social">
     <div class="container">
-      <h2 class="section-title">What the AI Drafts — Live Sample Output</h2>
-      <p class="section-sub">Below is actual output from our demo. No templates — GPT-4o-mini trained on employment law patterns, generated in seconds. <em>Your firm's documents will reflect your own style and precedents.</em></p>
+      <h2 class="section-title">Sample AI Drafts — Real Output, Generated in Seconds</h2>
+      <p class="section-sub">These are actual outputs from our demo — no templates, no pre-written samples. <em>Your firm's drafts will reflect your own style and precedents.</em></p>
       <div class="testimonial-grid">
         <div class="testimonial" style="border-left: 4px solid #3b82f6;">
           <div style="font-size:0.85rem;font-weight:700;color:#3b82f6;margin-bottom:8px;">📋 SEVERANCE AGREEMENT · Texas Employment</div>
@@ -563,6 +563,111 @@ function handleCapture(e) {
       </p>
     </div>
   </section>
+
+<!-- LIVE DEMO EMBEDDED -->
+<section style="background:#0f172a;padding:72px 0;color:white;">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px;">
+      <p style="color:#60a5fa;font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;">Try It Right Now</p>
+      <h2 style="font-size:2rem;font-weight:700;margin-bottom:12px;">Generate a Severance Agreement<br>in 45 Seconds</h2>
+      <p style="color:#94a3b8;font-size:1rem;max-width:520px;margin:0 auto;">No account needed. Fill in the details below and see what DocuFlow drafts for your practice.</p>
+    </div>
+    <div style="background:#1e293b;border-radius:16px;padding:32px;max-width:720px;margin:0 auto;border:1px solid #334155;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div>
+          <label style="display:block;color:#94a3b8;font-size:0.8rem;margin-bottom:6px;">Employee Name</label>
+          <input id="demo-name" type="text" value="Maria Gonzalez" style="width:100%;padding:10px 12px;border-radius:6px;border:1px solid #475569;background:#0f172a;color:white;font-size:0.9rem;">
+        </div>
+        <div>
+          <label style="display:block;color:#94a3b8;font-size:0.8rem;margin-bottom:6px;">Job Title</label>
+          <input id="demo-title" type="text" value="Senior Associate" style="width:100%;padding:10px 12px;border-radius:6px;border:1px solid #475569;background:#0f172a;color:white;font-size:0.9rem;">
+        </div>
+        <div>
+          <label style="display:block;color:#94a3b8;font-size:0.8rem;margin-bottom:6px;">Years of Service</label>
+          <input id="demo-years" type="text" value="6 years" style="width:100%;padding:10px 12px;border-radius:6px;border:1px solid #475569;background:#0f172a;color:white;font-size:0.9rem;">
+        </div>
+        <div>
+          <label style="display:block;color:#94a3b8;font-size:0.8rem;margin-bottom:6px;">Severance Offered</label>
+          <input id="demo-severance" type="text" value="12 weeks" style="width:100%;padding:10px 12px;border-radius:6px;border:1px solid #475569;background:#0f172a;color:white;font-size:0.9rem;">
+        </div>
+        <div>
+          <label style="display:block;color:#94a3b8;font-size:0.8rem;margin-bottom:6px;">Non-Compete</label>
+          <input id="demo-nc" type="text" value="6 months" style="width:100%;padding:10px 12px;border-radius:6px;border:1px solid #475569;background:#0f172a;color:white;font-size:0.9rem;">
+        </div>
+        <div>
+          <label style="display:block;color:#94a3b8;font-size:0.8rem;margin-bottom:6px;">State</label>
+          <input id="demo-state" type="text" value="Texas" style="width:100%;padding:10px 12px;border-radius:6px;border:1px solid #475569;background:#0f172a;color:white;font-size:0.9rem;">
+        </div>
+      </div>
+      <button onclick="generateDemo()" id="demo-btn" style="width:100%;background:#3b82f6;color:white;padding:14px;border-radius:8px;font-size:1rem;font-weight:600;border:none;cursor:pointer;margin-bottom:16px;">
+        ⚡ Generate Severance Agreement
+      </button>
+      <div id="demo-output" style="display:none;background:#0f172a;border-radius:8px;border:1px solid #334155;padding:20px;max-height:400px;overflow-y:auto;font-size:0.82rem;color:#e2e8f0;line-height:1.7;font-family:'Courier New',monospace;white-space:pre-wrap;"></div>
+      <div id="demo-loading" style="display:none;text-align:center;padding:24px;color:#60a5fa;">Generating...</div>
+      <div id="demo-error" style="display:none;background:#450a0a;border:1px solid #7f1d1d;border-radius:8px;padding:16px;color:#fca5a5;font-size:0.85rem;margin-top:12px;">
+        ⚠️ Demo unavailable right now. <a href="https://gerardounna.github.io/docuflowlegal/docuflow-product/demo-interface.html" style="color:#60a5fa;">Try the full demo here →</a>
+      </div>
+    </div>
+    <p style="text-align:center;color:#64748b;font-size:0.82rem;margin-top:20px;">
+      <strong style="color:#86efac;">This is the real product.</strong> Your firm's drafts include your clauses, your language, your standards — trained on your actual documents.
+    </p>
+    <div style="text-align:center;margin-top:32px;">
+      <a href="https://gerardounna.github.io/docuflowlegal/booking-page.html" style="display:inline-block;background:#22c55e;color:white;padding:14px 36px;border-radius:8px;font-size:1rem;font-weight:700;text-decoration:none;">
+        📅 Book Free Consultation — Get 3 Free Documents →
+      </a>
+    </div>
+  </div>
+</section>
+<script>
+const API_URL = 'https://test-pest-visitors-biology.trycloudflare.com/api/generate-document';
+function generateDemo() {
+  const btn = document.getElementById('demo-btn');
+  const out = document.getElementById('demo-output');
+  const loading = document.getElementById('demo-loading');
+  const err = document.getElementById('demo-error');
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+  out.style.display = 'none';
+  err.style.display = 'none';
+  loading.style.display = 'block';
+  const payload = {
+    document_type: 'severance_agreement',
+    inputs: {
+      employee_name: document.getElementById('demo-name').value,
+      job_title: document.getElementById('demo-title').value,
+      years_of_service: document.getElementById('demo-years').value,
+      severance_weeks: document.getElementById('demo-severance').value.replace(/[^0-9]/g,''),
+      non_compete_months: document.getElementById('demo-nc').value.replace(/[^0-9]/g,''),
+      state: document.getElementById('demo-state').value
+    }
+  };
+  fetch(API_URL, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  })
+  .then(r => r.json())
+  .then(data => {
+    loading.style.display = 'none';
+    let content = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+    if (content) {
+      try { content = JSON.parse(content).output || content; } catch(e) {}
+      out.textContent = content;
+    } else {
+      out.textContent = JSON.stringify(data, null, 2).substring(0,2000);
+    }
+    out.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '⚡ Generate Another';
+  })
+  .catch(function() {
+    loading.style.display = 'none';
+    err.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '⚡ Generate Severance Agreement';
+  });
+}
+</script>
 
 <!-- PRICING -->
 <section class="pricing">
@@ -645,6 +750,10 @@ function handleCapture(e) {
       <div class="faq-item">
         <div class="faq-q">What if we don't have existing documents to train the AI?</div>
         <div class="faq-a">Most firms do — engagement letters, petitions, contracts, filings you already have. If you genuinely don't, we start from your practice area templates and industry-standard language, then refine as you use the system. Initial setup still takes 1–2 weeks.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Does the $56,000/month ROI math actually add up?</div>
+        <div class="faq-a">It's a firm-level calculation: 20 severance agreements × 8 hours saved × $350/hr = $56,000. For a solo attorney doing 3–4 severances/month, that's $8,400–$11,200 in time recovered. Even one severance agreement/week at $225/hr (TX associate rate) saves $900–$1,200/month in associate hours. The math works at any firm size. We can walk through the numbers on a 15-minute call.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">How is this different from Clio or MyCase?</div>
